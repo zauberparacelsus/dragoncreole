@@ -1,0 +1,13 @@
+.boxedImage {
+	border: 1px solid #333;
+	padding: 10px;
+	margin: 10px;
+}
+
+table {
+	border:1px solid #333;
+}
+
+td, th {
+	border:1px solid #333;
+}
