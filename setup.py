@@ -27,5 +27,5 @@ setup(
 	],
 	long_description = "",
 	cmdclass = {"build_ext": build_ext},
-	ext_modules = [Extension("DragonCreoleC", ["dragoncreole.py"])]
+	ext_modules = [Extension("DragonCreoleC", ["dragoncreole/dragoncreole.py"])]
 )
