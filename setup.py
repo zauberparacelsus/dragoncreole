@@ -13,7 +13,8 @@ setup(
 	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.1",
 	keywords = ["parser", "markup", "html"],
 	install_requires= [
-		'html2text'
+		'html2text',
+		'cython'
 	],
 	classifiers = [
 		"Programming Language :: Python",
@@ -27,5 +28,5 @@ setup(
 	],
 	long_description = "",
 	cmdclass = {"build_ext": build_ext},
-	ext_modules = [Extension("DragonCreoleC", ["dragoncreole/dragoncreole.py"])]
+	ext_modules = [Extension("dragoncreole.DragonCreoleC", ["dragoncreole/dragoncreole.py"])]
 )
