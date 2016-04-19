@@ -12,7 +12,7 @@ DragonCreole began life as a custom spinoff of the Creole markup, optimized for 
 
 Currently, documentation is not yet ready, but getting started with DragonCreole is simple enough:
 
-```
+```python
 from dragoncreole import DragonCreole
 
 parser = DragonCreole()
