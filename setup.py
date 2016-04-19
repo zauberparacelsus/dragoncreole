@@ -12,6 +12,9 @@ setup(
 	url = "http://github.com/zauberparacelsus/dragoncreole",
 	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.1",
 	keywords = ["parser", "markup", "html"],
+	install_requires= [
+		'html2text'
+	],
 	classifiers = [
 		"Programming Language :: Python",
 		"Development Status :: 4 - Beta",

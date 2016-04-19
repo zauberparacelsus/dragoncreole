@@ -19,6 +19,6 @@ parser = DragonCreole()
 print( parser.render("**Hello World!**") )
 ```
 
-Alternatively, you can run dragoncreole.py directly and then open [http://localhost:5000] in your browser to see a basic demo page.
+Alternatively, you can run dragoncreole.py directly and then open http://localhost:5000 in your browser to see a basic demo page.
 
 You can find examples of the markup in the file test.txt, and test.html contains the rendered output.
