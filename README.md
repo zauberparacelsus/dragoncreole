@@ -1,5 +1,5 @@
 
-== DragonCreole
+## DragonCreole
 
 DragonCreole began life as a custom spinoff of the Creole markup, optimized for speed and HTML5 compliance.  It has some additional features that make it different from the official Creole 1.0 specification:
 
@@ -9,3 +9,12 @@ DragonCreole began life as a custom spinoff of the Creole markup, optimized for 
 * Cells in tables can span across multiple columns
 * Automatic paragraphs can optionally be disabled
 * Macros are explicitly supported, using the recommended markup
+
+Currently, documentation is not yet ready, but getting started with DragonCreole is simple enough:
+
+```
+from dragoncreole import DragonCreole
+
+parser = DragonCreole()
+print( parser.render("**Hello World!**") )
+```
