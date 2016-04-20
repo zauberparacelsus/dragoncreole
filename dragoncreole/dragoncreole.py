@@ -239,13 +239,14 @@ class DragonCreole():
 					if(body[0] == ""):
 						newline = False
 				if(c in nextChar and not newline):
-					if(c in "*/_^,"):
+					if(c in "*/_^,-"):
 						body = self.formatTag(text[i:], c, {
 							"*":"b",
 							"/":"i",
 							"_":"u",
 							"^":"sup",
-							",":"sub"
+							",":"sub",
+							"-":"del"
 						}[c])
 					elif(c in "\\"):
 						body = ("<br>",1)
