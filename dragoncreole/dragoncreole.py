@@ -30,6 +30,7 @@ from types import *
 regex_list = re.compile(r'\*+\s.+|\#+\s.+|\@+\s.+|\!+\s.+')
 regex_list2 = re.compile(r'(\*+|\#+|\@+|\!+)')
 regex_indent = re.compile(r'(\:+)')
+rematch = re.match
 
 class MacroObject():
 	'''
@@ -447,7 +448,7 @@ class DragonCreole():
 	def handleLists(self, text):
 		lines = []
 		for line in text.split("\n"):
-			if(re.match(regex_list, line) == None):
+			if(rematch(regex_list, line) == None):
 				break
 			else:
 				lines += [line]
@@ -464,15 +465,17 @@ class DragonCreole():
 		output = [startTags[mark]]
 		opened = [endTags[mark]]
 		
-		while(i < len(lines)-1):
-			i+=1
+		listMarkCount = self.listMarkCount
+		process = self.process
+		
+		for i in range(0, len(lines)):
 			line = lines[i]
-			level = self.listMarkCount(lines[i])
+			level = listMarkCount(lines[i])
 			mark = line[0]
-			o = ["<li>", self.process(line[level+1:])]
+			o = ["<li>", process(line[level+1:])]
 			
 			if(i+1 < len(lines)):
-				nlevel = self.listMarkCount(lines[i+1])
+				nlevel = listMarkCount(lines[i+1])
 				nmark = lines[i+1][0]
 				if(nlevel != level):
 					if(nlevel > level):
@@ -493,15 +496,15 @@ class DragonCreole():
 				else:
 					o += ["</li>"]
 			else:
-				o += ["</li>"] + opened
+				o += ["</li>"] + opened + ["\n"]
 			
-			output += ["".join(o)]
+			output += o
 			num += 1
-		return ("\n".join(output), num, len("\n".join(lines)))
+		return ("".join(output), num, len("\n".join(lines)))
 			
 	
 	def listMarkCount(self, line):
-		res = re.match(regex_list2,line)
+		res = rematch(regex_list2,line)
 		if(res == None):
 			return 0
 		return len(res.groups()[0])
