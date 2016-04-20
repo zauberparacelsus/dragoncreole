@@ -83,11 +83,13 @@ class DragonCreole():
 		
 		self.bodied_macros = {
 			"block": self.macro_block
-		}.update(bodied_macros)
+		}
+		self.bodied_macros.update(bodied_macros)
 		
 		self.non_bodied_macros = {
 			"datetime": self.macro_datetime
-		}.update(non_bodied_macros)
+		}
+		self.non_bodied_macros.update(non_bodied_macros)
 		
 		self.link_path = link_path
 		self.image_path = image_path
@@ -710,13 +712,9 @@ if __name__ == "__main__":
 	from flask import Flask
 	app = Flask(__name__, static_folder="media")
 	
-	def macro_raw_html(macro):
-		return macro.body
-	
 	parser = DragonCreole(
 		image_path="media/",
 		link_class_func=None,
-		bodied_macros = {"html": macro_raw_html}
 	)
 	
 	@app.route("/")

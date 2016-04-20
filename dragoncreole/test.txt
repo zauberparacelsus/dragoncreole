@@ -131,4 +131,4 @@ __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 ===Macro Test
 <<datetime "%Y-%m-%d">> ~ <<datetime "%H:%M:%S">>
 
-<<html>><div style="border:1px solid #333; margin:10px; width:200px; padding:20px; text-align:center;">Hello, World!</div><</html>>
+<<block "div" style="border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;">>Hello, World!<</block>>
