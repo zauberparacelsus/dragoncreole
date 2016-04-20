@@ -426,7 +426,7 @@ class DragonCreole():
 		lines = text.split("\n")
 		while(len(lines) > 0):
 			output += ["<dt>" + self.process(lines[0][1:]) + "</dt>"]
-			output += ["<dd>" + self.process(lines[0][1:]) + "</dd>"]
+			output += ["<dd>" + self.process(lines[1][1:]) + "</dd>"]
 			del lines[:2]
 		output += ["</dl>"]
 		return ("\n".join(output),len("\n".join(lines)))
