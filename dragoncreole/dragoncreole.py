@@ -27,9 +27,9 @@ import shlex, inspect, re, html2text, time, datetime
 
 from types import *
 
-regex_list = re.compile(ur'\*+\s.+|\#+\s.+|\@+\s.+|\!+\s.+')
-regex_list2 = re.compile(ur'(\*+|\#+|\@+|\!+)')
-regex_indent = re.compile(ur'(\:+)')
+regex_list = re.compile(r'\*+\s.+|\#+\s.+|\@+\s.+|\!+\s.+')
+regex_list2 = re.compile(r'(\*+|\#+|\@+|\!+)')
+regex_indent = re.compile(r'(\:+)')
 
 class MacroObject():
 	'''
