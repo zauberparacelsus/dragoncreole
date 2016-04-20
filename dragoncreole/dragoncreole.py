@@ -23,7 +23,7 @@ except:
 	from cgi import escape as escape
 
 
-import shlex, inspect, re, html2text, time
+import shlex, inspect, re, html2text, time, datetime
 
 from types import *
 
@@ -80,10 +80,17 @@ class DragonCreole():
 			assert type(link_class_func) is FunctionType
 		'''
 		
+		
+		self.bodied_macros = {
+			"block": self.macro_block
+		}.update(bodied_macros)
+		
+		self.non_bodied_macros = {
+			"datetime": self.macro_datetime
+		}.update(non_bodied_macros)
+		
 		self.link_path = link_path
 		self.image_path = image_path
-		self.bodied_macros = bodied_macros
-		self.non_bodied_macros = non_bodied_macros
 		self.link_path_func = link_path_func
 		self.link_class_func = link_class_func
 		self.auto_paragraphs = auto_paragraphs
@@ -661,7 +668,28 @@ class DragonCreole():
 					if(counter == 0):
 						return i-length-4
 		return -1
-		
+
+	'''
+	Built-in macro for inserting the current time and date
+	'''
+	def macro_datetime(self,macro,timeString="%Y-%m-%d %H:%M:%S"):
+		return datetime.datetime.now().strftime(timeString)
+
+	'''
+	Built-in macro for inserting an html block such as div or span to the page
+	'''
+	def macro_block(self,macro,blockType="div",cssclass=None,cssid=None,style=None):
+		body = self.render(macro.body)
+		out = ["<{0}".format(blockType)]
+		if(cssid!=None):
+			out += [" id='{0}'".format(cssid)]
+		if(cssclass!=None):
+			out += [" class='{0}'".format(cssclass)]
+		if(style!=None):
+			out += [" style='{0}'".format(style)]
+		out += [">{0}</{1}>".format(body,blockType)]
+		return "".join(out)
+
 
 pageTemp = '''
 <!DOCTYPE html>
@@ -685,15 +713,10 @@ if __name__ == "__main__":
 	def macro_raw_html(macro):
 		return macro.body
 	
-	import datetime
-	def macro_datetime(macro, timeString="%Y-%m-%d %H:%M:%S"):
-		return datetime.datetime.now().strftime(timeString)
-	
 	parser = DragonCreole(
 		image_path="media/",
 		link_class_func=None,
-		bodied_macros = {"html": macro_raw_html},
-		non_bodied_macros = {"datetime": macro_datetime}
+		bodied_macros = {"html": macro_raw_html}
 	)
 	
 	@app.route("/")
