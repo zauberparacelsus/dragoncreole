@@ -18,7 +18,7 @@ __underlined text__
 
 --strike-through text--
 
-__**^^some^^**//,,mixed,,//--up--**//text//**__
+__**,,some,,** //--mixed--// ^^**up**^^ //text//__
 
 ----
 ===Link Test===
@@ -115,7 +115,7 @@ __underlined text__
 
 --strike-through text--
 
-__**^^some^^**//,,mixed,,//--up--**//text//**__
+__**,,some,,** //--mixed--// ^^**up**^^ //text//__
 }}}
 
 ----
