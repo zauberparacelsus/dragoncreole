@@ -147,11 +147,11 @@ class DragonCreole():
 				frag = self.handlePreformat(frag)[0]
 			elif(frag.startswith("<<") and frag.endswith(">>")):
 				frag = self.handleMacro(frag)[0]
-			elif(re.match(regex_list,frag) != None):
+			elif(rematch(regex_list,frag) != None):
 				if(i+1 < len(frags)):
 					i2 = i+1
 					while(i2 < len(frags)):
-						if(re.match(regex_list,frags[i2]) != None):
+						if(rematch(regex_list,frags[i2]) != None):
 							frag += "\n" + frags[i2].strip()
 							i2 += 1
 							skip = i2
@@ -404,7 +404,7 @@ class DragonCreole():
 	'''
 	def handleParagraph(self, line):
 		offset = 2
-		res = re.match(regex_indent, line)
+		res = rematch(regex_indent, line)
 		indent = 0
 		mark = ""
 		if(res != None):
@@ -455,8 +455,6 @@ class DragonCreole():
 		
 		mark = lines[0][0]
 		level = self.listMarkCount(lines[0])
-		i = -1
-		output = ""
 		num = 0
 		
 		startTags = {"*":"<ul>","#":"<ol>","@":"<ol type='A'>", "!":"<ol type='I'>"}
