@@ -239,13 +239,14 @@ class DragonCreole():
 					if(body[0] == ""):
 						newline = False
 				if(c in nextChar and not newline):
-					if(c in "*/_^,"):
+					if(c in "*/_^,-"):
 						body = self.formatTag(text[i:], c, {
 							"*":"b",
 							"/":"i",
 							"_":"u",
 							"^":"sup",
-							",":"sub"
+							",":"sub",
+							"-":"del"
 						}[c])
 					elif(c in "\\"):
 						body = ("<br>",1)
@@ -426,7 +427,7 @@ class DragonCreole():
 		lines = text.split("\n")
 		while(len(lines) > 0):
 			output += ["<dt>" + self.process(lines[0][1:]) + "</dt>"]
-			output += ["<dd>" + self.process(lines[0][1:]) + "</dd>"]
+			output += ["<dd>" + self.process(lines[1][1:]) + "</dd>"]
 			del lines[:2]
 		output += ["</dl>"]
 		return ("\n".join(output),len("\n".join(lines)))

@@ -16,7 +16,9 @@ __underlined text__
 
 ,,sub-script text,,
 
-__**^^some^^**//,,mixed,,//**//text//**__
+--strike-through text--
+
+__**^^some^^**//,,mixed,,//--up--**//text//**__
 
 ----
 ===Link Test===
@@ -111,7 +113,9 @@ __underlined text__
 
 ``sub-script text``
 
-__**^^some^^** //``mixed``// **//text//**__
+--strike-through text--
+
+__**^^some^^**//,,mixed,,//--up--**//text//**__
 }}}
 
 ----
@@ -128,4 +132,3 @@ __**^^some^^** //``mixed``// **//text//**__
 <<datetime "%Y-%m-%d">> ~ <<datetime "%H:%M:%S">>
 
 <<html>><div style="border:1px solid #333; margin:10px; width:200px; padding:20px; text-align:center;">Hello, World!</div><</html>>
-
