@@ -147,7 +147,7 @@ class DragonCreole():
 			elif(frag.startswith("{{{")):
 				if(frag.endswith("}}}")):
 					yield "<pre>{0}</pre>".format(frag[3:-3])
-					break
+					continue
 				nfrag = [frag]
 				closed = False
 				skip = i+1
@@ -497,7 +497,7 @@ class DragonCreole():
 	def handlePreformat(self, text):
 		end = text.find("}}}")
 		if(end != -1):
-			return ("<pre>{0}</pre>".format(escape(text[3:end]),True), end+2)
+			return ("<code>{0}</code>".format(escape(text[3:end]),True), end+2)
 		return ("",0)
 	
 	'''

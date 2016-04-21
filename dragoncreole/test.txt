@@ -120,6 +120,8 @@ __underlined text__
 __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 }}}
 
+The following text {{{is an inline preformat block}}} and will not be parsed.
+
 ----
 ===Paragraph Test===
 ><**This is a left-aligned paragraph.**  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.
