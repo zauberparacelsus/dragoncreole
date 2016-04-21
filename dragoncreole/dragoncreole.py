@@ -145,7 +145,7 @@ class DragonCreole():
 							break
 				yield self.handleTables(frag)
 			elif(frag.startswith("{{{")):
-				if(frag.endswith("}}}"):
+				if(frag.endswith("}}}")):
 					yield "<pre>{0}</pre>".format(frag[3:-3])
 					break
 				nfrag = [frag]
