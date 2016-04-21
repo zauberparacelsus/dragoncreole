@@ -112,7 +112,7 @@ class DragonCreole():
 		return "\n".join(self.renderSub(text, noMacros))
 		
 	def renderSub(self, text, noMacros=None):
-		frags = self.fragmentize(text)
+		frags = text.split("\n")
 		i = -1
 		skip = -1
 		process = self.process
@@ -144,8 +144,20 @@ class DragonCreole():
 						else:
 							break
 				yield self.handleTables(frag)
-			elif(frag.startswith("{{{") and frag.endswith("}}}")):
-				yield self.handlePreformat(frag)[0]
+			elif(frag.startswith("{{{")):
+				nfrag = [frag]
+				closed = False
+				skip = i+1
+				for ix, f in enumerate(frags[i+1:]):
+					skip += 1
+					nfrag += [f]
+					if(f.endswith("}}}")):
+						closed = True
+						break
+				if not closed:
+					yield "<pre>{0}</pre>".format(escape("\n".join(nfrag)[3:]))
+				else:
+					yield "<pre>{0}</pre>".format(escape("\n".join(nfrag)[3:-3]))
 			elif(frag.startswith("<<") and frag.endswith(">>")):
 				yield self.handleMacro(frag)[0]
 			elif(rematch(regex_list,frag) != None):
