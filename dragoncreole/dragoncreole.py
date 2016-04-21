@@ -112,7 +112,7 @@ class DragonCreole():
 		return "\n".join(self.renderSub(text, noMacros))
 		
 	def renderSub(self, text, noMacros=None):
-		frags = text.split("\n")
+		frags = [x.strip() for x in text.split("\n")]
 		i = -1
 		skip = -1
 		process = self.process
