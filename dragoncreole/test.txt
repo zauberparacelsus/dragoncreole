@@ -20,6 +20,8 @@ __underlined text__
 
 __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 
+~**The ~ character will force the next character to not be parsed**
+
 ----
 ===Link Test===
 A link to the [[index]]

@@ -223,13 +223,17 @@ class DragonCreole():
 				continue
 			if(blockStart==-1):
 				blockStart = i
-			if(c in "*/_^,-[{<\\"):
+			if(c in "~*/_^,-[{<\\"):
 				if(i>0): prevChar = text[i-1]
 				else: prevChar = ""
 				if(i < length): nextChar = text[i+1]
 				else: nextChar = ""
 				
 				body = ("",0)
+				
+				
+				if(c in "~"):
+					body = (nextChar,1)
 				
 				if(c[i:i+3] == "{{{"):
 					body = self.handlePreformat(text[i:])
