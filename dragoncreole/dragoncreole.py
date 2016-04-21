@@ -161,8 +161,33 @@ class DragonCreole():
 					yield "<pre>{0}</pre>".format(escape("\n".join(nfrag)[3:]))
 				else:
 					yield "<pre>{0}</pre>".format(escape("\n".join(nfrag)[3:-3]))
-			elif(frag.startswith("<<") and frag.endswith(">>")):
-				yield self.handleMacro(frag)[0]
+			elif(frag.startswith("<<")):
+				i2 = frag.find(">>")
+				if(i2 != -1):
+					macro = frag[2:i2].split(" ",1)[0]
+					if(macro in self.bodied_macros):
+						print("HIT")
+						if(frag.endswith("<</"+macro+">>")):
+							yield self.handleMacro(frag)[0]
+							continue
+						else:
+							nfrag = [frag]
+							closed = False
+							skip = i+1
+							for ix, f in enumerate(frags[i+1:]):
+								skip += 1
+								nfrag += [f]
+								if(f.endswith("<</"+macro+">>")):
+									closed = True
+									break
+							if not closed:
+								nfrag += "<</"+macro+">>"
+							yield self.handleMacro("\n".join(nfrag))[0]
+							continue
+				if(self.auto_paragraphs):
+					yield "<p>" + process(frag) + "</p>"
+				else:
+					yield process(frag)
 			elif(rematch(regex_list,frag) != None):
 				if(i+1 < len(frags)):
 					i2 = i+1
