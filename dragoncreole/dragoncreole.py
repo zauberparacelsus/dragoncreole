@@ -109,8 +109,10 @@ class DragonCreole():
 	Renders a page to HTML
 	'''
 	def render(self, text, noMacros=None):
+		return "\n".join(self.renderSub(text, noMacros))
+		
+	def renderSub(self, text, noMacros=None):
 		frags = self.fragmentize(text)
-		output = []
 		i = -1
 		skip = -1
 		process = self.process
@@ -122,15 +124,15 @@ class DragonCreole():
 				nextFrag = frags[i+1]
 			
 			if(frag == ""):
-				frag = "\n"
+				yield "\n"
 			elif(frag[:1] == "="):
-				frag = self.handleHeading(frag)
+				yield self.handleHeading(frag)
 			elif(frag[:2] == "\\\\"):
-				frag = "<br>"
+				yield "<br>"
 			elif(frag[:4] == "----"):
-				frag = "<hr>"
+				yield "<hr>"
 			elif(frag[:1] in ">:"):
-				frag = self.handleParagraph(frag)
+				yield self.handleParagraph(frag)
 			elif(frag[:1] == "|"):
 				if(i+1 < len(frags)):
 					i2 = i+1
@@ -141,11 +143,11 @@ class DragonCreole():
 							skip = i2
 						else:
 							break
-				frag = self.handleTables(frag)
+				yield self.handleTables(frag)
 			elif(frag.startswith("{{{") and frag.endswith("}}}")):
-				frag = self.handlePreformat(frag)[0]
+				yield self.handlePreformat(frag)[0]
 			elif(frag.startswith("<<") and frag.endswith(">>")):
-				frag = self.handleMacro(frag)[0]
+				yield self.handleMacro(frag)[0]
 			elif(rematch(regex_list,frag) != None):
 				if(i+1 < len(frags)):
 					i2 = i+1
@@ -156,7 +158,7 @@ class DragonCreole():
 							skip = i2
 						else:
 							break
-				frag = self.handleLists(frag)
+				yield self.handleLists(frag)
 			elif(frag[:1] == ";" and nextFrag[:1] == ":"):
 				if(i+1 < len(frags)):
 					frag += "\n" + nextFrag
@@ -169,17 +171,13 @@ class DragonCreole():
 							skip = i2
 						else:
 							break
-				frag = self.handleDefinitionLists(frag)
+				yield self.handleDefinitionLists(frag)
 			else:
 				if(frag != ""):
 					if(self.auto_paragraphs):
-						frag = "<p>" + process(frag) + "</p>"
+						yield "<p>" + process(frag) + "</p>"
 					else:
-						frag = process(frag)
-			
-				
-			output += [frag]
-		return "\n".join(output)
+						yield process(frag)
 	
 	def fragmentize(self, text):
 		frags = []
