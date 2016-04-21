@@ -388,7 +388,7 @@ class DragonCreole():
 		else:
 			ret = "<p>{0}</p>\n".format(self.process(line[indent:]))
 		if(indent > 0):
-			return "<div style='margin-left:{0}px;'>\n{1}</div>".format(indent*20, ret[0])
+			return "<div style='margin-left:{0}px;'>\n{1}</div>".format(indent*20, ret)
 		else:
 			return ret
 	
