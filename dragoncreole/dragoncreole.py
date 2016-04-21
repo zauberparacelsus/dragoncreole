@@ -226,7 +226,7 @@ class DragonCreole():
 				continue
 			if(blockStart==-1):
 				blockStart = i
-			if(c in "\n*/_^,-[{<\\"):
+			if(c in "*/_^,-[{<\\"):
 				if(i>0): prevChar = text[i-1]
 				else: prevChar = ""
 				if(i < length): nextChar = text[i+1]
@@ -259,7 +259,7 @@ class DragonCreole():
 					if(blockStart != -1):
 						output += escape(text[blockStart:i],True)
 						blockStart=-1
-					if(body[0] != 0):
+					if(body[0] != ""):
 						output += body[0]
 					skip = body[1]
 					continue
