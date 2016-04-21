@@ -184,17 +184,21 @@ class DragonCreole():
 		frags = []
 		fragstart = -1
 		length = len(text)
-		skip = -1
+		skip = False
 		for i, c in enumerate(text):
-			if(skip > i):
+			if(skip):
+				if(c == "}" and text[i:i+3] == "}}}"):
+					skip = False
+				if(i+1 == length and fragstart != -1):
+					frags += [text[fragstart:].strip()]
 				continue
+			
 			if(fragstart == -1):
 				fragstart = i
+			
 			if(c == "{" and text[i:i+3] == "{{{"):
-				preEnd = text.find("}}}", i)
-				if(preEnd != -1):
-					skip = preEnd
-					continue
+				skip = True
+				continue
 			
 			if(c == "\n"):
 				frags += [text[fragstart:i].strip()]
