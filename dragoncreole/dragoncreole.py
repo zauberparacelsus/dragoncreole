@@ -113,11 +113,9 @@ class DragonCreole():
 		output = []
 		i = -1
 		skip = -1
-		while(i < len(frags)-1):
-			i+=1
+		for i, frag in enumerate(frags):
 			if(skip > i):
 				continue
-			frag = frags[i].strip()
 			nextFrag = ""
 			if(i+1 < len(frags)):
 				nextFrag = frags[i+1]
@@ -136,8 +134,8 @@ class DragonCreole():
 				if(i+1 < len(frags)):
 					i2 = i+1
 					while(i2 < len(frags)):
-						if(frags[i2].strip()[:1] == "|"):
-							frag += "\n" + frags[i2].strip()
+						if(frags[i2][:1] == "|"):
+							frag += "\n" + frags[i2]
 							i2 += 1
 							skip = i2
 						else:
@@ -152,7 +150,7 @@ class DragonCreole():
 					i2 = i+1
 					while(i2 < len(frags)):
 						if(rematch(regex_list,frags[i2]) != None):
-							frag += "\n" + frags[i2].strip()
+							frag += "\n" + frags[i2]
 							i2 += 1
 							skip = i2
 						else:
@@ -199,11 +197,11 @@ class DragonCreole():
 					continue
 			
 			if(c == "\n"):
-				frags += [text[fragstart:i]]
+				frags += [text[fragstart:i].strip()]
 				fragstart = -1
 			
 			if(i+1 == length and fragstart != -1):
-				frags += [text[fragstart:]]
+				frags += [text[fragstart:].strip()]
 		
 		return frags
 	
