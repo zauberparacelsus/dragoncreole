@@ -123,13 +123,13 @@ class DragonCreole():
 			if(frag == ""):
 				frag = "\n"
 			elif(frag[:1] == "="):
-				frag = self.handleHeading(frag)[0]
+				frag = self.handleHeading(frag)
 			elif(frag[:2] == "\\\\"):
 				frag = "<br>"
 			elif(frag[:4] == "----"):
 				frag = "<hr>"
 			elif(frag[:1] in ">:"):
-				frag = self.handleParagraph(frag)[0]
+				frag = self.handleParagraph(frag)
 			elif(frag[:1] == "|"):
 				if(i+1 < len(frags)):
 					i2 = i+1
@@ -140,7 +140,7 @@ class DragonCreole():
 							skip = i2
 						else:
 							break
-				frag = self.handleTables(frag)[0]
+				frag = self.handleTables(frag)
 			elif(frag.startswith("{{{") and frag.endswith("}}}")):
 				frag = self.handlePreformat(frag)[0]
 			elif(frag.startswith("<<") and frag.endswith(">>")):
@@ -155,7 +155,7 @@ class DragonCreole():
 							skip = i2
 						else:
 							break
-				frag = self.handleLists(frag)[0]
+				frag = self.handleLists(frag)
 			elif(frag[:1] == ";" and nextFrag[:1] == ":"):
 				if(i+1 < len(frags)):
 					frag += "\n" + nextFrag
@@ -168,7 +168,7 @@ class DragonCreole():
 							skip = i2
 						else:
 							break
-				frag = self.handleDefinitionLists(frag)[0]
+				frag = self.handleDefinitionLists(frag)
 			else:
 				if(frag != ""):
 					if(self.auto_paragraphs):
@@ -297,10 +297,7 @@ class DragonCreole():
 			else:
 				break
 		esc_string = escape(line[levels:end+1])
-		return (
-			"<h{0} id='toc_{2}'>{1}</h{0}>\n".format(str(levels), esc_string, esc_string.replace(" ", "_")),
-			len(line)
-		)
+		return "<h{0} id='toc_{2}'>{1}</h{0}>\n".format(str(levels), esc_string, esc_string.replace(" ", "_"))
 	
 	'''
 	Parses links into html hyperlinks
@@ -380,18 +377,18 @@ class DragonCreole():
 		else:
 			mark = line[1]
 		if(mark in "<>_="):
-			ret = ("<p style='text-align:{0}'>{1}</p>\n".format({
+			ret = "<p style='text-align:{0}'>{1}</p>\n".format({
 					"<": "left",
 					">": "right",
 					"_": "center",
 					"=": "justify"
 				}[mark],
 				self.process(line[offset:])
-			), len(line))
+			)
 		else:
-			ret = ("<p>{0}</p>\n".format(self.process(line[indent:])), len(line))
+			ret = "<p>{0}</p>\n".format(self.process(line[indent:]))
 		if(indent > 0):
-			return ("<div style='margin-left:{0}px;'>\n{1}</div>".format(indent*20, ret[0]), ret[1])
+			return "<div style='margin-left:{0}px;'>\n{1}</div>".format(indent*20, ret[0])
 		else:
 			return ret
 	
@@ -406,7 +403,7 @@ class DragonCreole():
 			output += ["<dd>" + self.process(lines[1][1:]) + "</dd>"]
 			del lines[:2]
 		output += ["</dl>"]
-		return ("\n".join(output),len("\n".join(lines)))
+		return "\n".join(output)
 			
 	'''
 	Handler function for bullet, numbered, lettered, and roman numeral lists
@@ -418,7 +415,7 @@ class DragonCreole():
 				break
 			else:
 				lines += [line]
-		return ("".join(self.handleListsSub(lines)), len("\n".join(lines)))
+		return "".join(self.handleListsSub(lines))
 	
 	def handleListsSub(self, lines):
 		mark = lines[0][0]
@@ -533,8 +530,8 @@ class DragonCreole():
 						output+=self.handleTableCell(cell)
 				output+=["  </tr>"]
 			output+=["</table>"]
-			return ("\n".join(output), skip)
-		return ("",0)
+			return "\n".join(output)
+		return ""
 	'''
 	Handles an individual table cell
 	'''
