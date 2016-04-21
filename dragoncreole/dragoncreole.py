@@ -112,7 +112,7 @@ class DragonCreole():
 		return "\n".join(self.renderSub(text, noMacros))
 		
 	def renderSub(self, text, noMacros=None):
-		frags = self.fragmentize(text)
+		frags = [x.strip() for x in text.split("\n")]
 		i = -1
 		skip = -1
 		process = self.process
@@ -144,8 +144,23 @@ class DragonCreole():
 						else:
 							break
 				yield self.handleTables(frag)
-			elif(frag.startswith("{{{") and frag.endswith("}}}")):
-				yield self.handlePreformat(frag)[0]
+			elif(frag.startswith("{{{")):
+				if(frag.endswith("}}}"):
+					yield "<pre>{0}</pre>".format(frag[3:-3])
+					break
+				nfrag = [frag]
+				closed = False
+				skip = i+1
+				for ix, f in enumerate(frags[i+1:]):
+					skip += 1
+					nfrag += [f]
+					if(f.endswith("}}}")):
+						closed = True
+						break
+				if not closed:
+					yield "<pre>{0}</pre>".format(escape("\n".join(nfrag)[3:]))
+				else:
+					yield "<pre>{0}</pre>".format(escape("\n".join(nfrag)[3:-3]))
 			elif(frag.startswith("<<") and frag.endswith(">>")):
 				yield self.handleMacro(frag)[0]
 			elif(rematch(regex_list,frag) != None):
@@ -178,35 +193,6 @@ class DragonCreole():
 						yield "<p>" + process(frag) + "</p>"
 					else:
 						yield process(frag)
-	
-	def fragmentize(self, text):
-		frags = []
-		fragstart = -1
-		length = len(text)
-		skip = False
-		for i, c in enumerate(text):
-			if(skip):
-				if(c == "}" and text[i:i+3] == "}}}"):
-					skip = False
-				if(i+1 == length and fragstart != -1):
-					frags += [text[fragstart:].strip()]
-				continue
-			
-			if(fragstart == -1):
-				fragstart = i
-			
-			if(c == "{" and text[i:i+3] == "{{{"):
-				skip = True
-				continue
-			
-			if(c == "\n"):
-				frags += [text[fragstart:i].strip()]
-				fragstart = -1
-			
-			if(i+1 == length and fragstart != -1):
-				frags += [text[fragstart:].strip()]
-		
-		return frags
 	
 	def process(self, text, noMacros=None):
 		if(noMacros!=None and type(noMacros) is bool):
