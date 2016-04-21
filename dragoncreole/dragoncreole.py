@@ -221,7 +221,7 @@ class DragonCreole():
 				continue
 			if(blockStart==-1):
 				blockStart = i
-			if(c in "\n@!*/_^,-=#[{~|<\\"):
+			if(c in "\n*/_^,-[{<\\"):
 				if(i>0): prevChar = text[i-1]
 				else: prevChar = ""
 				if(i < length): nextChar = text[i+1]
@@ -229,24 +229,9 @@ class DragonCreole():
 				
 				body = ("",0)
 				
-				newline = (prevChar == "\n" or i == 0)
-				
 				if(c[i:i+3] == "{{{"):
 					body = self.handlePreformat(text[i:])
-					newline = False
-				
-				if(newline):
-					#if(prevChar == c):
-					#	body = ("\n<br><br>\n",0)
-					if(c in "|"):
-						body = self.handleTables(text[i:])
-					elif(nextChar == " " and c in "*#@!"):
-						body = self.handleLists(text[i:])
-					else:
-						body = self.doNewline(text[i:])
-					if(body[0] == ""):
-						newline = False
-				if(c in nextChar and not newline):
+				elif(c in nextChar):
 					if(c in "*/_^,-"):
 						body = self.formatTag(text[i:], c, {
 							"*":"b",
