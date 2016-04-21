@@ -284,23 +284,6 @@ class DragonCreole():
 		return (body,skip)
 	
 	'''
-	Handles newlines, in various forms
-	'''
-	def doNewline(self, text):
-		if(text[0] in "\n"):
-			return ("\n<br><br>\n", 0)
-		line = text.split("\n",1)[0].strip()
-		if(line==""):
-			return ("",0)
-		elif(line == "----"):
-			return ("\n<hr>\n",4)
-		elif(line[0] in "="):
-			return self.handleHeading(line)
-		elif(len(line)>1 and line[:1] in ">:"):
-			return self.handleParagraph(line)
-		return ("",0)
-	
-	'''
 	Handles the heading tag for text
 	'''
 	def handleHeading(self, line):
