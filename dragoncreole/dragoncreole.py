@@ -113,6 +113,7 @@ class DragonCreole():
 		output = []
 		i = -1
 		skip = -1
+		process = self.process
 		for i, frag in enumerate(frags):
 			if(skip > i):
 				continue
@@ -172,9 +173,9 @@ class DragonCreole():
 			else:
 				if(frag != ""):
 					if(self.auto_paragraphs):
-						frag = "<p>" + self.process(frag) + "</p>"
+						frag = "<p>" + process(frag) + "</p>"
 					else:
-						frag = self.process(frag)
+						frag = process(frag)
 			
 				
 			output += [frag]
