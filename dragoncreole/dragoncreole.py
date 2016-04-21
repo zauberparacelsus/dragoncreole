@@ -158,7 +158,7 @@ class DragonCreole():
 				frag = self.handleLists(frag)[0]
 			elif(frag[:1] == ";" and nextFrag[:1] == ":"):
 				if(i+1 < len(frags)):
-					frag = "\n" + nextFrag
+					frag += "\n" + nextFrag
 					i += 2
 					i2 = i
 					while(i2 < len(frags)):
