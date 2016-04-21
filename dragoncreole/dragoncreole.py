@@ -452,7 +452,9 @@ class DragonCreole():
 				break
 			else:
 				lines += [line]
-		
+		return ("".join(self.handleListsSub(lines)), len("\n".join(lines)))
+	
+	def handleListsSub(self, lines):
 		mark = lines[0][0]
 		level = self.listMarkCount(lines[0])
 		num = 0
@@ -460,7 +462,7 @@ class DragonCreole():
 		startTags = {"*":"<ul>","#":"<ol>","@":"<ol type='A'>", "!":"<ol type='I'>"}
 		endTags = {"*":"</ul>","#":"</ol>","@":"</ol>", "!":"</ol>"}
 		
-		output = [startTags[mark]]
+		yield startTags[mark]
 		opened = [endTags[mark]]
 		
 		listMarkCount = self.listMarkCount
@@ -470,35 +472,35 @@ class DragonCreole():
 			line = lines[i]
 			level = listMarkCount(lines[i])
 			mark = line[0]
-			o = ["<li>", process(line[level+1:])]
+			yield "<li>" + process(line[level+1:])
 			
 			if(i+1 < len(lines)):
 				nlevel = listMarkCount(lines[i+1])
 				nmark = lines[i+1][0]
 				if(nlevel != level):
 					if(nlevel > level):
-						o += ["\n", (startTags[nmark] * (nlevel - level))]
+						yield "\n" + (startTags[nmark] * (nlevel - level))
 						opened = ([endTags[nmark]] * (nlevel - level)) + opened
 					elif(nlevel < level):
-						o += ["</li>\n"]
+						yield "</li>\n"
 						for x in range(0,level - nlevel):
-							o += ["\n", opened[0]]
+							yield "\n" + opened[0]
 							del opened[0]
 						if(nmark != mark):
 							if(opened[0] != endTags[nmark]):
-								o += [opened[0], "\n", startTags[0]]
+								yield opened[0] + "\n", startTags[0]
 								opened[0] = endTags[nmark]
 				elif(nmark != mark):
-					o += ["</li>\n", startTags[nmark]]
+					yield "</li>\n" + startTags[nmark]
 					opened[0] = [endTags[nmark]]
 				else:
-					o += ["</li>"]
+					yield "</li>"
 			else:
-				o += ["</li>"] + opened + ["\n"]
+				yield "</li>" + "".join(opened) + "\n"
 			
-			output += o
+			#output += o
 			num += 1
-		return ("".join(output), num, len("\n".join(lines)))
+		#return ("".join(output), num, len("\n".join(lines)))
 			
 	
 	def listMarkCount(self, line):
