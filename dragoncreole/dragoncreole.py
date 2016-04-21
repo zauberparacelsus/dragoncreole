@@ -215,7 +215,6 @@ class DragonCreole():
 			self.noMacros = noMacros
 		skip = 0
 		output=""
-		text = "\n".join([line.rstrip() for line in text.split("\n")])
 		length = len(text)-1
 		blockStart=-1
 		prevChar=""
