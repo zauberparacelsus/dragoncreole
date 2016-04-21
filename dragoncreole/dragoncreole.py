@@ -285,6 +285,8 @@ class DragonCreole():
 	'''
 	def formatTag(self, text, mark, tag):
 		temp = text[2:].split(mark*2, 1)
+		if(temp == [""]):
+			return (text, len(text))
 		skip = len(temp[0]) + 3
 		body = "<{1}>{0}</{1}>".format(self.process(text[2:skip-1]), tag)
 		return (body,skip)
