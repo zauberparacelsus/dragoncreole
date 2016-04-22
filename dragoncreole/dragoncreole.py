@@ -166,7 +166,6 @@ class DragonCreole():
 				if(i2 != -1):
 					macro = frag[2:i2].split(" ",1)[0]
 					if(macro in self.bodied_macros):
-						print("HIT")
 						if(frag.endswith("<</"+macro+">>")):
 							yield self.handleMacro(frag)[0]
 							continue
