@@ -113,6 +113,9 @@ class DragonCreole():
 		
 	def renderSub(self, text, noMacros=None):
 		frags = [x.strip() for x in text.split("\n")]
+		if(frags == [""]):
+			yield ""
+			return
 		i = -1
 		skip = -1
 		process = self.process
