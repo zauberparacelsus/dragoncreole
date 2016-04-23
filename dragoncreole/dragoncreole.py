@@ -109,8 +109,14 @@ class DragonCreole():
 	Renders a page to HTML
 	'''
 	def render(self, text, noMacros=None):
-		self.postdata = {}
+		self.postdata = {
+			"toc": False,
+			"bookmarks": []
+		}
+		
 		ret = "\n".join(self.renderSub(text, noMacros))
+		
+		
 		self.postdata.clear()
 		return ret
 	
