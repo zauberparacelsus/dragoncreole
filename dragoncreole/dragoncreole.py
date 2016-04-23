@@ -220,6 +220,7 @@ class DragonCreole():
 						yield "<p>" + process(frag) + "</p>"
 					else:
 						yield process(frag)
+	__call__=render
 	
 	def process(self, text, noMacros=None):
 		if(noMacros!=None and type(noMacros) is bool):
@@ -280,7 +281,6 @@ class DragonCreole():
 			if(i==length and blockStart != -1):
 				output += escape(text[blockStart:])
 		return output
-	__call__=render
 	
 	'''
 	Renders a page to a plain text form
