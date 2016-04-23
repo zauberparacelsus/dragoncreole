@@ -110,6 +110,9 @@ class DragonCreole():
 	'''
 	def render(self, text, noMacros=None):
 		return "\n".join(self.renderSub(text, noMacros))
+	
+	def macroRender(self, text, noMacros=None):
+		return "\n".join(self.renderSub(text, noMacros))
 		
 	def renderSub(self, text, noMacros=None):
 		frags = [x.strip() for x in text.split("\n")]
@@ -630,12 +633,13 @@ class DragonCreole():
 							pos += [param]
 						else:
 							return (macroError.format("bad macro argument for {0}: {1}".format(macro, escape(param, True))), length)
-			mco = MacroObject(body=body, renderer=self.render)
+			mco = MacroObject(body=body, renderer=self.macroRender)
 			ret = func(mco, *pos, **kw)
 			if(ret == ""):
 				ret = 0
 			return (ret, length)
 		return ("",0)
+	
 	
 	'''
 	Used to find the closing marks of a macro
