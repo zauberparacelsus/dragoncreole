@@ -289,7 +289,7 @@ class DragonCreole():
 		noMacros = self.noMacros
 		toPlaintext = html2text.HTML2Text()
 		toPlaintext.ignore_links = True
-		ret = toPlaintext.handle(self.process(text, noMacros=True))
+		ret = toPlaintext.handle("\n".join(self.renderSub(text, noMacros=True)))
 		self.noMacros = noMacros
 		return ret
 	
@@ -668,7 +668,7 @@ class DragonCreole():
 	Built-in macro for inserting an html block such as div or span to the page
 	'''
 	def macro_block(self,macro,blockType="div",cssclass=None,cssid=None,style=None):
-		body = self.render(macro.body)
+		body = "\n".join(self.renderSub(macro.body))
 		out = ["<{0}".format(blockType)]
 		if(cssid!=None):
 			out += [" id='{0}'".format(cssid)]
