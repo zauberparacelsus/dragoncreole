@@ -109,7 +109,10 @@ class DragonCreole():
 	Renders a page to HTML
 	'''
 	def render(self, text, noMacros=None):
-		return "\n".join(self.renderSub(text, noMacros))
+		self.postdata = {}
+		ret = "\n".join(self.renderSub(text, noMacros))
+		self.postdata.clear()
+		return ret
 	
 	def macroRender(self, text, noMacros=None):
 		return "\n".join(self.renderSub(text, noMacros))
