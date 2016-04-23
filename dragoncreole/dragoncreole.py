@@ -316,6 +316,7 @@ class DragonCreole():
 	def handleHeading(self, line):
 		levels = 0
 		end = 0
+		hID = ""
 		for i, c in enumerate(line):
 			if(c in "=" and end == 0):
 				levels += 1
@@ -324,7 +325,14 @@ class DragonCreole():
 			else:
 				break
 		esc_string = escape(line[levels:end+1])
-		return "<h{0} id='toc_{2}'>{1}</h{0}>\n".format(str(levels), esc_string, esc_string.replace(" ", "_"))
+		if("^" in esc_string):
+			temp = esc_string.split("^", 1)
+			if(temp[1] != ""):
+				esc_string = temp[0]
+				hID = " id='{0}'".format(temp[1].replace(" ","_"))
+		if(hID==""):
+			hID = " id='{0}'".format(esc_string.replace(" ","_"))
+		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
 	
 	'''
 	Parses links into html hyperlinks
@@ -344,7 +352,9 @@ class DragonCreole():
 		if(len(text)==2):
 			if(text[1] != ""):
 				name = self.process(text[1])
-		if(not ("://" in link or "www." in link)):
+		if(link == ""):
+			link = self.link_path + text[0].replace(" ","_")
+		elif(not ("://" in link or "www." in link)):
 			if(self.link_class_func != None):
 				LC = self.link_class_func(link)
 				if(LC != None):

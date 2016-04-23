@@ -28,6 +28,8 @@ A link to the [[index]]
 
 A named link to the [[/|Index Page]]
 
+A link to the [[#Macros|Macro Test]]
+
 ----
 ===Image Test===
 A regular image:\\
@@ -132,7 +134,7 @@ The following text {{{is an inline preformat block}}} and will not be parsed.
 ::**This is a justified double-indented paragraph.**  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.
 ::::>**This is a quadruple-indented right-aligned paragraph.**  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.
 ----
-===Macro Test
+===Macro Test^Macros
 <<datetime "%Y-%m-%d">> ~ <<datetime "%H:%M:%S">>
 
 <<block "div" style="border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;">>
