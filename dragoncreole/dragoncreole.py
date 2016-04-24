@@ -692,6 +692,7 @@ class DragonCreole():
 				w = ["<col style='width:auto'/>"]
 			else:
 				w = ["<col style='width:{0}px'/>".format(width * 20)]
+			
 			if("width" in columns):
 				columns["width"] += w
 			else:
