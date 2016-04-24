@@ -109,9 +109,13 @@ An image with parameters and a css class:\\
 |+++quadruple-wide row
 \\
 |=|=Right|=Center|=Left
-|:---:|---:|:---:|:---
+|:----:|---:|:---:|:---
 |a|the|first|row
 |b|the|second|row
+|c|the|+third row
+|d|+the fourth|row
+|e|++the fifth row
+|+++the last row
 
 ----
 ===Preformat Test===

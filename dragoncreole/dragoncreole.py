@@ -610,6 +610,9 @@ class DragonCreole():
 			
 			if(rematch(regex_table_align, lines[1]) != None):
 				columns = self.handleTableColumns(lines[1])
+				if('width' in columns):
+					output += columns["width"]
+					del columns["width"]
 				del lines[1]
 			
 			firstline = True
@@ -670,21 +673,29 @@ class DragonCreole():
 		columns = {}
 		for col, cell in enumerate(line.split("|")[1:]):
 			alignment = "left"
-			#width = 0
+			width = 0
 			
 			if(cell.startswith(":")):
 				if(cell.endswith(":") and rematch(regex_hyphens_only, cell[1:-1]) != None):
 					alignment = "center"
-					#width = len(cell[1:-1])
+					width = len(cell[1:-1])
 				elif(rematch(regex_hyphens_only, cell[1:]) != None):
 					alignment = "left"
-					#width = len(cell[1:])
+					width = len(cell[1:])
 			elif(cell.endswith(":") and rematch(regex_hyphens_only, cell[:-1]) != None):
 				alignment = "right"
-				#width = len(cell[:-1])
+				width = len(cell[:-1])
 			
-			#width = max(width-3,0)
-			
+			w=""
+			width = max(width-3,0)
+			if(width == 0):
+				w = ["<col style='width:auto'/>"]
+			else:
+				w = ["<col style='width:{0}px'/>".format(width * 20)]
+			if("width" in columns):
+				columns["width"] += w
+			else:
+				columns["width"] = w
 			columns[col+1] = " class='{0}'".format(alignment)
 		return columns
 	
