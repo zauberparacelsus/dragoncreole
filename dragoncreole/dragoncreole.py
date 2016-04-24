@@ -402,6 +402,7 @@ class DragonCreole():
 		process = self.process
 		for key, item in sorted(self.postdata["footnoteIDs"].items(), key = lambda x: x[1]):
 			output += ["<li id='fn_{0}'>{1} <a href='#fnref_{0}'><sup>[ref]</sup></a></li>".format(key, process(fdata[key]))]
+		output += ["</ol>"]
 	
 		return "\n".join(output)
 		
