@@ -326,12 +326,8 @@ class DragonCreole():
 	def handleTOC(self, text):
 		index = text.find("$TOC")
 		lineEnd = text.find("\n",index)
-		output = []
-		
-		for i, bookmark in enumerate(self.postdata["bookmarks"]):
-			output += ["{0} [[#{1}|{2}]]".format("*" * bookmark[2], bookmark[1], bookmark[0])]
-		
-		return text[:index] + "<div id='_table_of_contents'>" + "\n".join(self.renderSub("\n".join(output))) + "</div>" + text[lineEnd:]
+		output = "\n".join(self.renderSub("\n".join(self.postdata["bookmarks"])))
+		return text[:index] + "<div id='_table_of_contents'>{0}</div>".format(output) + text[lineEnd:]
 	
 	'''
 	Handles the heading tag for text
@@ -356,10 +352,10 @@ class DragonCreole():
 			else:
 				esc_string = temp[0]
 				temp[1] = temp[1].replace(" ","_")
-				self.postdata["bookmarks"] += [(esc_string, temp[1],levels)]
+				self.postdata["bookmarks"] += ["{0} [[#{1}|{2}]]".format("*" * levels, temp[1], esc_string)]
 				hID = " id='{0}'".format(temp[1])
 		if(hID==None):
-			self.postdata["bookmarks"] += [(esc_string, esc_string.replace(" ","_"), levels)]
+			self.postdata["bookmarks"] += ["{0} [[{1}]]".format("*" * levels, esc_string)]
 			hID = " id='{0}'".format(esc_string.replace(" ","_"))
 		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
 	
