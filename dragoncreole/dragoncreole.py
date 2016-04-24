@@ -30,6 +30,8 @@ from types import *
 regex_list = re.compile(r'\*+\s.+|\#+\s.+|\@+\s.+|\!+\s.+')
 regex_list2 = re.compile(r'(\*+|\#+|\@+|\!+)')
 regex_indent = re.compile(r'(\:+)')
+regex_table_align = re.compile(r'^[|:-]+$')
+regex_hyphens_only = re.compile(r'-+')
 rematch = re.match
 
 class MacroObject():
@@ -604,6 +606,14 @@ class DragonCreole():
 		skip = len("\n".join(lines))
 		if(skip > 0):
 			output=["<table>"]
+			columns = {}
+			
+			if(rematch(regex_table_align, lines[1]) != None):
+				output += ["\n".join(self.handleTableColumns(lines[1]))]
+				del lines[1]
+			
+			firstline = True
+			has_thead = False
 			for line in lines:
 				if(line[-1] in "|"):
 					line = line[1:-1]
@@ -612,11 +622,22 @@ class DragonCreole():
 				
 				cells = re.split("\|(?!(?:(?!\[\[).)*\]\])(?!(?:(?!\{\{).)*\}\})(?!(?:(?!\<\<).)*\>\>)", line, flags=re.VERBOSE)
 				
-				output+=["  <tr>"]
+				output2 = []
+				thead = True
 				for cell in cells:
 					if(cell!=""):
-						output+=self.handleTableCell(cell)
-				output+=["  </tr>"]
+						output2+=self.handleTableCell(cell)
+						if("<th>" not in output2[-1]):
+							thead = False
+				if(firstline and thead):
+					has_thead = True
+					output2 = ["  <thead>"] + output2 + ["  </thead>"]
+				output += ["  <tr>"] + output2 + ["  </tr>"]
+				if(firstline and has_thead):
+					output += ["  <tbody>"]
+				firstline = False
+			if(has_thead):
+				output += ["</tbody>"]
 			output+=["</table>"]
 			return "\n".join(output)
 		return ""
@@ -639,6 +660,38 @@ class DragonCreole():
 			cell = cell[span:]
 			colspan = " colspan='{0}'".format(span+1)
 		return [output.format(tag, colspan, self.process(cell))]
+	
+	def handleTableColumns(self, line):
+		yield "<colgroup>"
+		for col, cell in enumerate(line.split("|")[1:]):
+			alignment = ""
+			width = 0
+			
+			if(cell.startswith(":")):
+				if(cell.endswith(":") and rematch(regex_hyphens_only, cell[1:-1]) != None):
+					alignment = "center"
+					width = len(cell[1:-1])
+				elif(rematch(regex_hyphens_only, cell[1:]) != None):
+					alignment = "left"
+					width = len(cell[1:])
+			elif(cell.endswith(":") and rematch(regex_hyphens_only, cell[:-1]) != None):
+				alignment = "right"
+				width = len(cell[:-1])
+			
+			if(alignment != ""):
+				alignment = " text-align:{0};".format(alignment)
+			
+			if(width <= 3):
+				width = ""
+			else:
+				width = " width:{0};".format((width-3) * 20)
+			
+			if(alignment != "" or width != ""):
+				yield "<col style=\"{0}{1}\">".format(alignment, width)
+			else:
+				yield "<col>"
+		yield "</colgroup>"
+	
 	
 	'''
 	Handler function for macros

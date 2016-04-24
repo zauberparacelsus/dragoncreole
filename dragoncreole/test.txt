@@ -107,6 +107,11 @@ An image with parameters and a css class:\\
 |c|+double-wide|row
 |d|++triple-wide row
 |+++quadruple-wide row
+\\
+|=|=Right|=Center|=Left
+|:---:|---:|:---:|:---
+|a|the|first|row
+|b|the|second|row
 
 ----
 ===Preformat Test===
