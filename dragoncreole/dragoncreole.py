@@ -116,6 +116,8 @@ class DragonCreole():
 		
 		ret = "\n".join(self.renderSub(text, noMacros))
 		
+		if(self.postdata["toc"] == True):
+			ret = self.handleTOC(ret)
 		
 		self.postdata.clear()
 		return ret
@@ -137,7 +139,6 @@ class DragonCreole():
 			nextFrag = ""
 			if(i+1 < len(frags)):
 				nextFrag = frags[i+1]
-			
 			if(frag == ""):
 				yield "\n"
 			elif(frag[:1] == "="):
@@ -226,6 +227,9 @@ class DragonCreole():
 						else:
 							break
 				yield self.handleDefinitionLists(frag)
+			elif(frag.startswith("$TOC")):
+				self.postdata["toc"] = True
+				yield frag
 			else:
 				if(frag != ""):
 					if(self.auto_paragraphs):
@@ -317,12 +321,25 @@ class DragonCreole():
 		return (body,skip)
 	
 	'''
+	Inserts a table of contents post-process
+	'''
+	def handleTOC(self, text):
+		index = text.find("$TOC")
+		lineEnd = text.find("\n",index)
+		output = []
+		
+		for i, bookmark in enumerate(self.postdata["bookmarks"]):
+			output += ["{0} [[#{1}|{2}]]".format("*" * bookmark[2], bookmark[1], bookmark[0])]
+		
+		return text[:index] + "<div id='_table_of_contents'>" + "\n".join(self.renderSub("\n".join(output))) + "</div>" + text[lineEnd:]
+	
+	'''
 	Handles the heading tag for text
 	'''
 	def handleHeading(self, line):
 		levels = 0
 		end = 0
-		hID = ""
+		hID = None
 		for i, c in enumerate(line):
 			if(c in "=" and end == 0):
 				levels += 1
@@ -335,8 +352,11 @@ class DragonCreole():
 			temp = esc_string.split("^", 1)
 			if(temp[1] != ""):
 				esc_string = temp[0]
-				hID = " id='{0}'".format(temp[1].replace(" ","_"))
-		if(hID==""):
+				temp[1] = temp[1].replace(" ","_")
+				self.postdata["bookmarks"] += [(esc_string, temp[1],levels)]
+				hID = " id='{0}'".format(temp[1])
+		if(hID==None):
+			self.postdata["bookmarks"] += [(esc_string, esc_string.replace(" ","_"), levels)]
 			hID = " id='{0}'".format(esc_string.replace(" ","_"))
 		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
 	
