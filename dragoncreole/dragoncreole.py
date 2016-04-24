@@ -610,29 +610,6 @@ class DragonCreole():
 				else:
 					line = line[1:]
 				
-				'''
-				bracks=0
-				cells=[]
-				start=-1
-				length = len(line)-1
-				for i, c in enumerate(line):
-					if(start==-1):
-						start=i
-					if(i>0):
-						prev = line[i-1]
-						if(c == prev):
-							if(c in "{[<"):
-								bracks+=1
-							elif(c in "}]>"):
-								if(bracks > 0):
-									bracks-=1
-						if(c in "|" and bracks == 0):
-							cells += [line[start:i]]
-							start=-1
-					if(i == length):
-						cells += [line[start:]]
-				'''
-				
 				cells = re.split("\|(?!(?:(?!\[\[).)*\]\])(?!(?:(?!\{\{).)*\}\})(?!(?:(?!\<\<).)*\>\>)", line, flags=re.VERBOSE)
 				
 				output+=["  <tr>"]
