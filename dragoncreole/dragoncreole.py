@@ -341,7 +341,7 @@ class DragonCreole():
 		index = text.find("$TOC")
 		lineEnd = text.find("\n",index)
 		output = self.handleLists("\n".join(self.postdata["bookmarks"]))
-		return text[:index] + "<div id='_table_of_contents'>{0}</div>".format(output) + text[lineEnd:]
+		return text[:index] + "<div id='_table_of_contents'>\n{0}\n</div>".format(output) + text[lineEnd:]
 	
 	'''
 	Handles the heading tag for text
