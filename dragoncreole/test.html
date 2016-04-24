@@ -8,20 +8,25 @@
 		<link rel="stylesheet" type="text/css" href=/media/theme.css>
 	</head>
 	<body>
-		<h1 id='toc_Heading_1'>Heading 1</h1>
+		<h1>Heading 1</h1>
 
-<h2 id='toc_Heading_2'>Heading 2</h2>
+<h2>Heading 2</h2>
 
-<h3 id='toc_Heading_3'>Heading 3</h3>
+<h3>Heading 3</h3>
 
-<h4 id='toc_Heading_4'>Heading 4</h4>
+<h4>Heading 4</h4>
 
-<h5 id='toc_Heading_5'>Heading 5</h5>
+<h5>Heading 5</h5>
 
-<h6 id='toc_Heading_6'>Heading 6</h6>
+<h6>Heading 6</h6>
 
 <hr>
-<h3 id='toc_Format_Test'>Format Test</h3>
+<h3 id='Table_of_Contents'>Table of Contents</h3>
+
+<div id='_table_of_contents'><ul><li><a href='/Table_of_Contents'>Table of Contents</a></li><li><a href='/Format_Test'>Format Test</a></li><li><a href='/Link_Test'>Link Test</a></li><li><a href='/Image_Test'>Image Test</a></li><li><a href='/Lists_Test'>Lists Test</a></li><li><a href='/Definitions_List'>Definitions List</a></li><li><a href='/Tables_Test'>Tables Test</a></li><li><a href='/Preformat_Test'>Preformat Test</a></li><li><a href='/Paragraph_Test'>Paragraph Test</a></li><li><a href='/#Macros'>Macro Test</a></li></ul>
+</div>
+<hr>
+<h3 id='Format_Test'>Format Test</h3>
 
 <p><b>bold text</b></p>
 
@@ -44,17 +49,26 @@
 <p><u><b><sub>some</sub></b> <i><del>mixed</del></i> <sup><b>up</b></sup> <i>text</i></u></p>
 
 
-<hr>
-<h3 id='toc_Link_Test'>Link Test</h3>
+<p>**The  character will force the next character to not be parsed**</p>
 
-<p>A link to the <a href='/'>index</a></p>
+
+<hr>
+<h3 id='Link_Test'>Link Test</h3>
+
+<p>A link to the <a href='/index'>index</a></p>
 
 
 <p>A named link to the <a href='/'>Index Page</a></p>
 
 
+<p>A link to the <a href='/#Macros'>Macro Test</a></p>
+
+
+<p>This is a footnote<sup id='fnref_fntest'><a href='#fn_fntest'>[1]</a></sup> and will link to a line of text on the bottom of the page.</p>
+
+
 <hr>
-<h3 id='toc_Image_Test'>Image Test</h3>
+<h3 id='Image_Test'>Image Test</h3>
 
 <p>A regular image:<br></p>
 <p><img src='media/StarryNight.jpeg' alt='StarryNight.jpeg'></p>
@@ -69,85 +83,58 @@
 
 
 <hr>
-<h3 id='toc_Lists_Test'>Lists Test</h3>
+<h3 id='Lists_Test'>Lists Test</h3>
 
-<ul>
-<li>A bullet list</li>
-<li>Item 2
-<ul>
-<li>Sub-Item 1
-<ul>
-<li>Sub-Sub-Item 1</li>
+<ul><li>A bullet list</li><li>Item 2
+<ul><li>Sub-Item 1
+<ul><li>Sub-Sub-Item 1</li>
 
 </ul>
-</ul>
-<li>Item 3</li></ul>
+</ul><li>Item 3</li></ul>
+
 <br>
-<ol>
-<li>A numbered list</li>
-<li>Item 2
-<ol>
-<li>Sub-Item 1
-<ol>
-<li>Sub-Sub-Item 1</li>
+<ol><li>A numbered list</li><li>Item 2
+<ol><li>Sub-Item 1
+<ol><li>Sub-Sub-Item 1</li>
 
 </ol>
-</ol>
-<li>Item 3</li></ol>
+</ol><li>Item 3</li></ol>
+
 <br>
-<ol type='A'>
-<li>A lettered list</li>
-<li>Item 2
-<ol type='A'>
-<li>Sub-Item 1
-<ol type='A'>
-<li>Sub-Sub-Item 1</li>
+<ol type='A'><li>A lettered list</li><li>Item 2
+<ol type='A'><li>Sub-Item 1
+<ol type='A'><li>Sub-Sub-Item 1</li>
 
 </ol>
-</ol>
-<li>Item 3</li></ol>
+</ol><li>Item 3</li></ol>
+
 <br>
-<ol type='I'>
-<li>A roman numerals list</li>
-<li>Item 2
-<ol type='I'>
-<li>Sub-Item 1
-<ol type='I'>
-<li>Sub-Sub-Item 1</li>
+<ol type='I'><li>A roman numerals list</li><li>Item 2
+<ol type='I'><li>Sub-Item 1
+<ol type='I'><li>Sub-Sub-Item 1</li>
 
 </ol>
-</ol>
-<li>Item 3</li></ol>
+</ol><li>Item 3</li></ol>
+
 <br>
-<ul>
-<li>A bullet list with mixed sub-lists</li>
-<li>Item 2
-<ol>
-<li>Sub-Item 1
-<ul>
-<li>Sub-Sub-Item 1</li>
-<li>Sub-Sub-Item 2</li>
+<ul><li>A bullet list with mixed sub-lists</li><li>Item 2
+<ol><li>Sub-Item 1
+<ul><li>Sub-Sub-Item 1</li><li>Sub-Sub-Item 2</li>
 
-</ul>
-<li>Sub-Item 2
-<ol type='A'>
-<li>Sub-Sub-Item 3</li>
-<li>Sub-Sub-Item 4</li>
+</ul><li>Sub-Item 2
+<ol type='A'><li>Sub-Sub-Item 3</li><li>Sub-Sub-Item 4</li>
+
+</ol><li>Sub-Item 3
+<ol type='I'><li>Sub-Sub-Item 5</li><li>Sub-Sub-Item 6</li>
 
 </ol>
-<li>Sub-Item 3
-<ol type='I'>
-<li>Sub-Sub-Item 5</li>
-<li>Sub-Sub-Item 6</li>
+</ol><li>Item 3</li></ul>
 
-</ol>
-</ol>
-<li>Item 3</li></ul>
 <hr>
-<h3 id='toc_Definitions_List'>Definitions List</h3>
+<h3 id='Definitions_List'>Definitions List</h3>
 
 <dl>
-<dt></dt>
+<dt> Apple</dt>
 <dd> A red fruit</dd>
 <dt> Orange</dt>
 <dd> An orange fruit</dd>
@@ -161,7 +148,7 @@
 <dd> A hard brown fruit with a white inside</dd>
 </dl>
 <hr>
-<h3 id='toc_Tables_Test'>Tables Test</h3>
+<h3 id='Tables_Test'>Tables Test</h3>
 
 <table>
   <tr>
@@ -198,7 +185,7 @@
 
 
 <hr>
-<h3 id='toc_Preformat_Test'>Preformat Test</h3>
+<h3 id='Preformat_Test'>Preformat Test</h3>
 
 <pre>
 &lt;div&gt;&lt;b&gt;bold test&lt;/b&gt;&lt;/div&gt;
@@ -219,8 +206,11 @@ __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 </pre>
 
 
+<p>The following text <code>is an inline preformat block</code> and will not be parsed.</p>
+
+
 <hr>
-<h3 id='toc_Paragraph_Test'>Paragraph Test</h3>
+<h3 id='Paragraph_Test'>Paragraph Test</h3>
 
 <p style='text-align:left'><b>This is a left-aligned paragraph.</b>  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.  This is a left-aligned paragraph.</p>
 
@@ -240,11 +230,21 @@ __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 <p style='text-align:right'><b>This is a quadruple-indented right-aligned paragraph.</b>  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.</p>
 </div>
 <hr>
-<h3 id='toc_Macro_Test'>Macro Test</h3>
+<h3 id='Macros'>Macro Test</h3>
 
-<em><b>MACRO ERROR: could not find datetime </b></em> 
+<p>2016-04-23  22:48:19</p>
 
 
-<em><b>MACRO ERROR: could not find html </b></em> 
+<div style='border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;'><p>Hello, World!</p>
+
+</div>
+
+
+<hr>
+
+
+<ol id='footnotes'>
+<li id='fn_fntest'>This is an example of a footnote! <a href='#fnref_fntest'><sup>[ref]</sup></a></li>
+</ol>
 	</body>
 </html>
