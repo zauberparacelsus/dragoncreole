@@ -11,3 +11,14 @@ table {
 td, th {
 	border:1px solid #333;
 }
+
+
+.left {
+	text-align: left;
+}
+.right {
+	text-align: right;
+}
+.center {
+	text-align: center;
+}

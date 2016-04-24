@@ -680,7 +680,7 @@ class DragonCreole():
 				width = len(cell[:-1])
 			
 			if(alignment != ""):
-				alignment = " text-align:{0};".format(alignment)
+				alignment = "class='{0}'".format(alignment)
 			
 			if(width <= 3):
 				width = ""
@@ -688,7 +688,7 @@ class DragonCreole():
 				width = " width:{0};".format((width-3) * 20)
 			
 			if(alignment != "" or width != ""):
-				yield "<col style=\'{0}{1}\'>".format(alignment, width)
+				yield "<col {0}>".format(alignment, width)
 			else:
 				yield "<col>"
 		yield "</colgroup>"
