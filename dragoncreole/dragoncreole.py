@@ -535,8 +535,8 @@ class DragonCreole():
 		level = self.listMarkCount(lines[0])
 		num = 0
 		
-		startTags = {"*":"<ul>","#":"<ol>","@":"<ol type='A'>", "!":"<ol type='I'>"}
-		endTags = {"*":"</ul>","#":"</ol>","@":"</ol>", "!":"</ol>"}
+		startTags = {"*":"<ul>\n","#":"<ol>\n","@":"<ol type='A'>\n", "!":"<ol type='I'>\n"}
+		endTags = {"*":"</ul>\n","#":"</ol>\n","@":"</ol>\n", "!":"</ol>\n"}
 		
 		yield startTags[mark]
 		opened = [endTags[mark]]
