@@ -4,12 +4,14 @@
 	margin: 10px;
 }
 
-table {
+table, td, th {
 	border:1px solid #333;
+	padding:2px;
+	border-spacing:2px;
 }
 
-td, th {
-	border:1px solid #333;
+thead {
+	background-color:#ddd;
 }
 
 
