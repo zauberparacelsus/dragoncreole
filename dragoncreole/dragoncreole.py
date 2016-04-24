@@ -609,12 +609,13 @@ class DragonCreole():
 			columns = {}
 			
 			if(rematch(regex_table_align, lines[1]) != None):
-				output += ["\n".join(self.handleTableColumns(lines[1]))]
+				columns = self.handleTableColumns(lines[1])
 				del lines[1]
 			
 			firstline = True
 			has_thead = False
 			for line in lines:
+				columns["count"]=1
 				if(line[-1] in "|"):
 					line = line[1:-1]
 				else:
@@ -626,7 +627,7 @@ class DragonCreole():
 				thead = True
 				for cell in cells:
 					if(cell!=""):
-						output2+=self.handleTableCell(cell)
+						output2+=self.handleTableCell(cell, columns)
 						if("<th>" not in output2[-1]):
 							thead = False
 				if(firstline and thead):
@@ -645,8 +646,8 @@ class DragonCreole():
 	'''
 	Handles an individual table cell
 	'''
-	def handleTableCell(self, cell):
-		output = "    <{0}{1}>{2}</{0}>"
+	def handleTableCell(self, cell, columns):
+		output = "    <{0}{1}{2}>{3}</{0}>"
 		colspan = ""
 		tag = "td"
 		if(cell[0] == "="):
@@ -660,38 +661,32 @@ class DragonCreole():
 		if(span > 0):
 			cell = cell[span:]
 			colspan = " colspan='{0}'".format(span+1)
-		return [output.format(tag, colspan, self.process(cell))]
+		count = columns["count"]
+		col = columns.get(count, "")
+		columns["count"] = count + 1 + span
+		return [output.format(tag, colspan, col, self.process(cell))]
 	
 	def handleTableColumns(self, line):
-		yield "<colgroup>"
+		columns = {}
 		for col, cell in enumerate(line.split("|")[1:]):
-			alignment = ""
-			width = 0
+			alignment = "left"
+			#width = 0
 			
 			if(cell.startswith(":")):
 				if(cell.endswith(":") and rematch(regex_hyphens_only, cell[1:-1]) != None):
 					alignment = "center"
-					width = len(cell[1:-1])
+					#width = len(cell[1:-1])
 				elif(rematch(regex_hyphens_only, cell[1:]) != None):
 					alignment = "left"
-					width = len(cell[1:])
+					#width = len(cell[1:])
 			elif(cell.endswith(":") and rematch(regex_hyphens_only, cell[:-1]) != None):
 				alignment = "right"
-				width = len(cell[:-1])
+				#width = len(cell[:-1])
 			
-			if(alignment != ""):
-				alignment = "class='{0}'".format(alignment)
+			#width = max(width-3,0)
 			
-			if(width <= 3):
-				width = ""
-			else:
-				width = " width:{0};".format((width-3) * 20)
-			
-			if(alignment != "" or width != ""):
-				yield "<col {0}>".format(alignment, width)
-			else:
-				yield "<col>"
-		yield "</colgroup>"
+			columns[col+1] = " class='{0}'".format(alignment)
+		return columns
 	
 	
 	'''
