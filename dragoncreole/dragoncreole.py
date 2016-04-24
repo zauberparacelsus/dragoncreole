@@ -378,7 +378,10 @@ class DragonCreole():
 			if(text[1] != ""):
 				name = self.process(text[1])
 		if(link == ""):
-			link = self.link_path + text[0].replace(" ","_")
+			if(text[0] == "/"):
+				link = "/"
+			else:
+				link = self.link_path + text[0].replace(" ","_")
 		elif(not ("://" in link or "www." in link)):
 			if(self.link_class_func != None):
 				LC = self.link_class_func(link)
