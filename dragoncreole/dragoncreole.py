@@ -340,7 +340,7 @@ class DragonCreole():
 	def handleTOC(self, text):
 		index = text.find("$TOC")
 		lineEnd = text.find("\n",index)
-		output = "\n".join(self.renderSub("\n".join(self.postdata["bookmarks"])))
+		output = self.handleLists("\n".join(self.postdata["bookmarks"]))
 		return text[:index] + "<div id='_table_of_contents'>{0}</div>".format(output) + text[lineEnd:]
 	
 	'''
