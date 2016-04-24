@@ -109,7 +109,24 @@ class DragonCreole():
 	Renders a page to HTML
 	'''
 	def render(self, text, noMacros=None):
-		return "\n".join(self.renderSub(text, noMacros))
+		self.postdata = {
+			"toc": False,
+			"bookmarks": [],
+			"footnotes": {},
+			"footnoteIDs": {}
+		}
+		pdata = self.postdata
+		
+		ret = "\n".join(self.renderSub(text, noMacros))
+		
+		if(pdata["toc"] == True):
+			ret = self.handleTOC(ret)
+		
+		if(pdata["footnotes"] != {} and pdata["footnoteIDs"] != {}):
+			ret += self.renderFootnotes()
+		
+		self.postdata.clear()
+		return ret
 	
 	def macroRender(self, text, noMacros=None):
 		return "\n".join(self.renderSub(text, noMacros))
@@ -128,17 +145,19 @@ class DragonCreole():
 			nextFrag = ""
 			if(i+1 < len(frags)):
 				nextFrag = frags[i+1]
-			
 			if(frag == ""):
 				yield "\n"
 			elif(frag[:1] == "="):
 				yield self.handleHeading(frag)
-			elif(frag[:2] == "\\\\"):
+			elif(frag == "\\\\"):
 				yield "<br>"
-			elif(frag[:4] == "----"):
+			elif(frag == "----"):
 				yield "<hr>"
 			elif(frag[:1] in ">:"):
 				yield self.handleParagraph(frag)
+			elif(frag.startswith("[[^")):
+				self.handleFootnoteInfo(frag)
+				continue
 			elif(frag[:1] == "|"):
 				if(i+1 < len(frags)):
 					i2 = i+1
@@ -217,6 +236,9 @@ class DragonCreole():
 						else:
 							break
 				yield self.handleDefinitionLists(frag)
+			elif(frag.startswith("$TOC")):
+				self.postdata["toc"] = True
+				yield frag
 			else:
 				if(frag != ""):
 					if(self.auto_paragraphs):
@@ -267,7 +289,10 @@ class DragonCreole():
 					elif(c in "\\"):
 						body = ("<br>",1)
 					elif(c in "["):
-						body = self.handleLink(text[i:])
+						if(text[i:i+3] == "[[^"):
+							body = self.handleFootnote(text[i:])
+						else:
+							body = self.handleLink(text[i:])
 					elif(c in "{"):
 						body = self.handleImage(text[i:])
 					elif(c in "<"):
@@ -308,11 +333,21 @@ class DragonCreole():
 		return (body,skip)
 	
 	'''
+	Inserts a table of contents post-process
+	'''
+	def handleTOC(self, text):
+		index = text.find("$TOC")
+		lineEnd = text.find("\n",index)
+		output = "\n".join(self.renderSub("\n".join(self.postdata["bookmarks"])))
+		return text[:index] + "<div id='_table_of_contents'>{0}</div>".format(output) + text[lineEnd:]
+	
+	'''
 	Handles the heading tag for text
 	'''
 	def handleHeading(self, line):
 		levels = 0
 		end = 0
+		hID = None
 		for i, c in enumerate(line):
 			if(c in "=" and end == 0):
 				levels += 1
@@ -321,13 +356,60 @@ class DragonCreole():
 			else:
 				break
 		esc_string = escape(line[levels:end+1])
-		return "<h{0} id='toc_{2}'>{1}</h{0}>\n".format(str(levels), esc_string, esc_string.replace(" ", "_"))
+		if("^" in esc_string):
+			temp = esc_string.split("^", 1)
+			if(temp[1] == ""):
+				esc_string = esc_string[:-1]
+				hID = ""
+			else:
+				esc_string = temp[0]
+				temp[1] = temp[1].replace(" ","_")
+				self.postdata["bookmarks"] += ["{0} [[#{1}|{2}]]".format("*" * levels, temp[1], esc_string)]
+				hID = " id='{0}'".format(temp[1])
+		if(hID==None):
+			self.postdata["bookmarks"] += ["{0} [[{1}]]".format("*" * levels, esc_string)]
+			hID = " id='{0}'".format(esc_string.replace(" ","_"))
+		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
 	
+	'''
+	Parses Footnotes:
+	'''
+	def handleFootnote(self, line):
+		text = line[3:].split("]]",1)[0].replace(" ","_")
+		skip = len(text)+4
+		
+		num = self.postdata["footnoteIDs"].get(text, 0)
+		if(num == 0):
+			num = 1 + len(self.postdata["footnoteIDs"])
+			self.postdata["footnoteIDs"][text] = num
+		
+		return ("<sup id='fnref_{0}'><a href='#fn_{0}'>[{1}]</a></sup>".format(text,num), skip)
+	
+	def handleFootnoteInfo(self, text):
+		temp = text[3:].split("]]",1)
+		label = temp[0].replace(" ","_")
+		
+		num = self.postdata["footnoteIDs"].get(label, 0)
+		if(num == 0):
+			num = 1 + len(self.postdata["footnoteIDs"])
+			self.postdata["footnoteIDs"][label] = num
+		self.postdata["footnotes"][label] = temp[1]
+	
+	def renderFootnotes(self):
+		output = ["\n<ol id='footnotes'>"]
+		
+		fdata = self.postdata["footnotes"]
+		process = self.process
+		for key, item in sorted(self.postdata["footnoteIDs"].items(), key = lambda x: x[1]):
+			output += ["<li id='fn_{0}'>{1} <a href='#fnref_{0}'><sup>[ref]</sup></a></li>".format(key, process(fdata[key]))]
+		output += ["</ol>"]
+	
+		return "\n".join(output)
+		
 	'''
 	Parses links into html hyperlinks
 	'''
 	def handleLink(self, line):
-		line
 		text = line[2:].split("]]",1)[0].split("|",1)
 		skip = len("|".join(text))+4
 		if(skip==0):
@@ -341,7 +423,12 @@ class DragonCreole():
 		if(len(text)==2):
 			if(text[1] != ""):
 				name = self.process(text[1])
-		if(not ("://" in link or "www." in link)):
+		if(link == ""):
+			if(text[0] == "/"):
+				link = "/"
+			else:
+				link = self.link_path + text[0].replace(" ","_")
+		elif(not ("://" in link or "www." in link)):
 			if(self.link_class_func != None):
 				LC = self.link_class_func(link)
 				if(LC != None):

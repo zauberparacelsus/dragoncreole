@@ -1,9 +1,12 @@
-=Heading 1=
-==Heading 2==
-===Heading 3===
-====Heading 4====
-=====Heading 5=====
-======Heading 6======
+=Heading 1^
+==Heading 2^
+===Heading 3^
+====Heading 4^
+=====Heading 5^
+======Heading 6^
+----
+===Table of Contents
+$TOC
 ----
 ===Format Test===
 **bold text**
@@ -27,6 +30,11 @@ __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 A link to the [[index]]
 
 A named link to the [[/|Index Page]]
+
+A link to the [[#Macros|Macro Test]]
+
+This is a footnote[[^fntest]] and will link to a line of text on the bottom of the page.
+[[^fntest]]This is an example of a footnote!
 
 ----
 ===Image Test===
@@ -132,9 +140,11 @@ The following text {{{is an inline preformat block}}} and will not be parsed.
 ::**This is a justified double-indented paragraph.**  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.  This is a justified double-indented paragraph.
 ::::>**This is a quadruple-indented right-aligned paragraph.**  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.  This is a quadruple-indented right-aligned paragraph.
 ----
-===Macro Test
+===Macro Test^Macros
 <<datetime "%Y-%m-%d">> ~ <<datetime "%H:%M:%S">>
 
 <<block "div" style="border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;">>
 Hello, World!
 <</block>>
+
+----
