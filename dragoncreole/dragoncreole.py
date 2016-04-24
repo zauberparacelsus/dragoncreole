@@ -570,7 +570,7 @@ class DragonCreole():
 					yield "</li>\n" + startTags[nmark]
 					opened[0] = [endTags[nmark]]
 				else:
-					yield "</li>"
+					yield "</li>\n"
 			else:
 				yield "</li>" + "".join(opened) + "\n"
 			
