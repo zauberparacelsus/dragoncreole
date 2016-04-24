@@ -631,8 +631,9 @@ class DragonCreole():
 							thead = False
 				if(firstline and thead):
 					has_thead = True
-					output2 = ["  <thead>"] + output2 + ["  </thead>"]
-				output += ["  <tr>"] + output2 + ["  </tr>"]
+					output += ["  <thead>", "  <tr>"] + output2 + ["  </tr>", "  </thead>"]
+				else:
+					output += ["  <tr>"] + output2 + ["  </tr>"]
 				if(firstline and has_thead):
 					output += ["  <tbody>"]
 				firstline = False
@@ -687,7 +688,7 @@ class DragonCreole():
 				width = " width:{0};".format((width-3) * 20)
 			
 			if(alignment != "" or width != ""):
-				yield "<col style=\"{0}{1}\">".format(alignment, width)
+				yield "<col style=\'{0}{1}\'>".format(alignment, width)
 			else:
 				yield "<col>"
 		yield "</colgroup>"
