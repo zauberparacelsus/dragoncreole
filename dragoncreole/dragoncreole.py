@@ -617,6 +617,7 @@ class DragonCreole():
 			
 			firstline = True
 			has_thead = False
+			handleTableCell = self.handleTableCell
 			for line in lines:
 				columns["count"]=1
 				if(line[-1] in "|"):
@@ -630,8 +631,8 @@ class DragonCreole():
 				thead = True
 				for cell in cells:
 					if(cell!=""):
-						output2+=self.handleTableCell(cell, columns)
-						if("<th>" not in output2[-1]):
+						output2+=handleTableCell(cell, columns)
+						if("<th" not in output2[-1]):
 							thead = False
 				if(firstline and thead):
 					has_thead = True
