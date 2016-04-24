@@ -350,7 +350,10 @@ class DragonCreole():
 		esc_string = escape(line[levels:end+1])
 		if("^" in esc_string):
 			temp = esc_string.split("^", 1)
-			if(temp[1] != ""):
+			if(temp[1] == ""):
+				esc_string = esc_string[:-1]
+				hID = ""
+			else:
 				esc_string = temp[0]
 				temp[1] = temp[1].replace(" ","_")
 				self.postdata["bookmarks"] += [(esc_string, temp[1],levels)]
