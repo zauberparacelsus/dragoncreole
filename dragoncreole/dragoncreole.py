@@ -111,13 +111,19 @@ class DragonCreole():
 	def render(self, text, noMacros=None):
 		self.postdata = {
 			"toc": False,
-			"bookmarks": []
+			"bookmarks": [],
+			"footnotes": {},
+			"footnoteIDs": {}
 		}
+		pdata = self.postdata
 		
 		ret = "\n".join(self.renderSub(text, noMacros))
 		
-		if(self.postdata["toc"] == True):
+		if(pdata["toc"] == True):
 			ret = self.handleTOC(ret)
+		
+		if(pdata["footnotes"] != {} and pdata["footnoteIDs"] != {}):
+			ret += self.renderFootnotes()
 		
 		self.postdata.clear()
 		return ret
@@ -143,12 +149,15 @@ class DragonCreole():
 				yield "\n"
 			elif(frag[:1] == "="):
 				yield self.handleHeading(frag)
-			elif(frag[:2] == "\\\\"):
+			elif(frag == "\\\\"):
 				yield "<br>"
-			elif(frag[:4] == "----"):
+			elif(frag == "----"):
 				yield "<hr>"
 			elif(frag[:1] in ">:"):
 				yield self.handleParagraph(frag)
+			elif(frag.startswith("[[^")):
+				self.handleFootnoteInfo(frag)
+				continue
 			elif(frag[:1] == "|"):
 				if(i+1 < len(frags)):
 					i2 = i+1
@@ -280,7 +289,10 @@ class DragonCreole():
 					elif(c in "\\"):
 						body = ("<br>",1)
 					elif(c in "["):
-						body = self.handleLink(text[i:])
+						if(text[i:i+3] == "[[^"):
+							body = self.handleFootnote(text[i:])
+						else:
+							body = self.handleLink(text[i:])
 					elif(c in "{"):
 						body = self.handleImage(text[i:])
 					elif(c in "<"):
@@ -360,10 +372,43 @@ class DragonCreole():
 		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
 	
 	'''
+	Parses Footnotes:
+	'''
+	def handleFootnote(self, line):
+		text = line[3:].split("]]",1)[0].replace(" ","_")
+		skip = len(text)+4
+		
+		num = self.postdata["footnoteIDs"].get(text, 0)
+		if(num == 0):
+			num = 1 + len(self.postdata["footnoteIDs"])
+			self.postdata["footnoteIDs"][text] = num
+		
+		return ("<sup id='fnref_{0}'><a href='#fn_{0}'>[{1}]</a></sup>".format(text,num), skip)
+	
+	def handleFootnoteInfo(self, text):
+		temp = text[3:].split("]]",1)
+		label = temp[0].replace(" ","_")
+		
+		num = self.postdata["footnoteIDs"].get(label, 0)
+		if(num == 0):
+			num = 1 + len(self.postdata["footnoteIDs"])
+			self.postdata["footnoteIDs"][label] = num
+		self.postdata["footnotes"][label] = temp[1]
+	
+	def renderFootnotes(self):
+		output = ["\n<ol id='footnotes'>"]
+		
+		fdata = self.postdata["footnotes"]
+		process = self.process
+		for key, item in sorted(self.postdata["footnoteIDs"].items(), key = lambda x: x[1]):
+			output += ["<li id='fn_{0}'>{1} <a href='#fnref_{0}'><sup>[ref]</sup></a></li>".format(key, process(fdata[key]))]
+	
+		return "\n".join(output)
+		
+	'''
 	Parses links into html hyperlinks
 	'''
 	def handleLink(self, line):
-		line
 		text = line[2:].split("]]",1)[0].split("|",1)
 		skip = len("|".join(text))+4
 		if(skip==0):
