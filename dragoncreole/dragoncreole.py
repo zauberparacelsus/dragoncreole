@@ -85,7 +85,8 @@ class DragonCreole():
 		
 		
 		self.bodied_macros = {
-			"block": self.macro_block
+			"div": self.macro_div,
+			"span": self.macro_span
 		}
 		self.bodied_macros.update(bodied_macros)
 		
@@ -793,11 +794,24 @@ class DragonCreole():
 	'''
 	def macro_datetime(self,macro,timeString="%Y-%m-%d %H:%M:%S"):
 		return datetime.datetime.now().strftime(timeString)
-
+	
 	'''
-	Built-in macro for inserting an html block such as div or span to the page
+	Built-in macro for inserting a div block
 	'''
-	def macro_block(self,macro,blockType="div",cssclass=None,cssid=None,style=None):
+	def macro_div(self,macro,cssclass=None,cssid=None,style=None):
+		print(style)
+		return self.insert_block(macro,"div",cssclass,cssid,style)
+	
+	'''
+	Built-in macro for inserting a span block
+	'''
+	def macro_span(self,macro,cssclass=None,cssid=None,style=None):
+		return self.insert_block(macro,"span",cssclass,cssid,style)
+	
+	'''
+	Hidden macro for inserting an html block such as div or span to the page
+	'''
+	def insert_block(self,macro,blockType="div",cssclass=None,cssid=None,style=None):
 		body = "\n".join(self.renderSub(macro.body))
 		out = ["<{0}".format(blockType)]
 		if(cssid!=None):
