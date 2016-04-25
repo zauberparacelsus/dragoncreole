@@ -152,7 +152,7 @@ The following text {{{is an inline preformat block}}} and will not be parsed.
 ===Macro Test^Macros
 <<datetime "%Y-%m-%d">> ~ <<datetime "%H:%M:%S">>
 
-<<div None None style="border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;">>
+<<div style="border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;">>
 Hello, World!
 <</div>>
 
