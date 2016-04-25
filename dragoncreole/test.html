@@ -23,7 +23,20 @@
 <hr>
 <h3 id='Table_of_Contents'>Table of Contents</h3>
 
-<div id='_table_of_contents'><ul><li><a href='/Table_of_Contents'>Table of Contents</a></li><li><a href='/Format_Test'>Format Test</a></li><li><a href='/Link_Test'>Link Test</a></li><li><a href='/Image_Test'>Image Test</a></li><li><a href='/Lists_Test'>Lists Test</a></li><li><a href='/Definitions_List'>Definitions List</a></li><li><a href='/Tables_Test'>Tables Test</a></li><li><a href='/Preformat_Test'>Preformat Test</a></li><li><a href='/Paragraph_Test'>Paragraph Test</a></li><li><a href='/#Macros'>Macro Test</a></li></ul>
+<div id='_table_of_contents'>
+<ul>
+<li><a href='/#Table_of_Contents'>Table of Contents</a></li>
+<li><a href='/#Format_Test'>Format Test</a></li>
+<li><a href='/#Link_Test'>Link Test</a></li>
+<li><a href='/#Image_Test'>Image Test</a></li>
+<li><a href='/#Lists_Test'>Lists Test</a></li>
+<li><a href='/#Definitions_List'>Definitions List</a></li>
+<li><a href='/#Tables_Test'>Tables Test</a></li>
+<li><a href='/#Preformat_Test'>Preformat Test</a></li>
+<li><a href='/#Paragraph_Test'>Paragraph Test</a></li>
+<li><a href='/#Macros'>Macro Test</a></li></ul>
+
+
 </div>
 <hr>
 <h3 id='Format_Test'>Format Test</h3>
@@ -85,50 +98,92 @@
 <hr>
 <h3 id='Lists_Test'>Lists Test</h3>
 
-<ul><li>A bullet list</li><li>Item 2
-<ul><li>Sub-Item 1
-<ul><li>Sub-Sub-Item 1</li>
+<ul>
+<li>A bullet list</li>
+<li>Item 2
+<ul>
+<li>Sub-Item 1
+<ul>
+<li>Sub-Sub-Item 1</li>
 
 </ul>
-</ul><li>Item 3</li></ul>
+
+</ul>
+<li>Item 3</li></ul>
+
 
 <br>
-<ol><li>A numbered list</li><li>Item 2
-<ol><li>Sub-Item 1
-<ol><li>Sub-Sub-Item 1</li>
+<ol>
+<li>A numbered list</li>
+<li>Item 2
+<ol>
+<li>Sub-Item 1
+<ol>
+<li>Sub-Sub-Item 1</li>
 
 </ol>
-</ol><li>Item 3</li></ol>
+
+</ol>
+<li>Item 3</li></ol>
+
 
 <br>
-<ol type='A'><li>A lettered list</li><li>Item 2
-<ol type='A'><li>Sub-Item 1
-<ol type='A'><li>Sub-Sub-Item 1</li>
+<ol type='A'>
+<li>A lettered list</li>
+<li>Item 2
+<ol type='A'>
+<li>Sub-Item 1
+<ol type='A'>
+<li>Sub-Sub-Item 1</li>
 
 </ol>
-</ol><li>Item 3</li></ol>
+
+</ol>
+<li>Item 3</li></ol>
+
 
 <br>
-<ol type='I'><li>A roman numerals list</li><li>Item 2
-<ol type='I'><li>Sub-Item 1
-<ol type='I'><li>Sub-Sub-Item 1</li>
+<ol type='I'>
+<li>A roman numerals list</li>
+<li>Item 2
+<ol type='I'>
+<li>Sub-Item 1
+<ol type='I'>
+<li>Sub-Sub-Item 1</li>
 
 </ol>
-</ol><li>Item 3</li></ol>
+
+</ol>
+<li>Item 3</li></ol>
+
 
 <br>
-<ul><li>A bullet list with mixed sub-lists</li><li>Item 2
-<ol><li>Sub-Item 1
-<ul><li>Sub-Sub-Item 1</li><li>Sub-Sub-Item 2</li>
+<ul>
+<li>A bullet list with mixed sub-lists</li>
+<li>Item 2
+<ol>
+<li>Sub-Item 1
+<ul>
+<li>Sub-Sub-Item 1</li>
+<li>Sub-Sub-Item 2</li>
 
-</ul><li>Sub-Item 2
-<ol type='A'><li>Sub-Sub-Item 3</li><li>Sub-Sub-Item 4</li>
-
-</ol><li>Sub-Item 3
-<ol type='I'><li>Sub-Sub-Item 5</li><li>Sub-Sub-Item 6</li>
+</ul>
+<li>Sub-Item 2
+<ol type='A'>
+<li>Sub-Sub-Item 3</li>
+<li>Sub-Sub-Item 4</li>
 
 </ol>
-</ol><li>Item 3</li></ul>
+<li>Sub-Item 3
+<ol type='I'>
+<li>Sub-Sub-Item 5</li>
+<li>Sub-Sub-Item 6</li>
+
+</ol>
+
+</ol>
+<li>Item 3</li></ul>
+
 
 <hr>
 <h3 id='Definitions_List'>Definitions List</h3>
@@ -151,12 +206,15 @@
 <h3 id='Tables_Test'>Tables Test</h3>
 
 <table>
+  <thead>
   <tr>
     <th></th>
     <th>the</th>
     <th>table</th>
     <th>header</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td>a</td>
     <td>single</td>
@@ -181,6 +239,53 @@
   <tr>
     <td colspan='4'>quadruple-wide row</td>
   </tr>
+</tbody>
+</table>
+<br>
+<table>
+<col style='width:20px'/>
+<col style='width:auto'/>
+<col style='width:auto'/>
+<col style='width:auto'/>
+  <thead>
+  <tr>
+    <th class='center'></th>
+    <th class='right'>Right</th>
+    <th class='center'>Center</th>
+    <th class='left'>Left</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class='center'>a</td>
+    <td class='right'>the</td>
+    <td class='center'>first</td>
+    <td class='left'>row</td>
+  </tr>
+  <tr>
+    <td class='center'>b</td>
+    <td class='right'>the</td>
+    <td class='center'>second</td>
+    <td class='left'>row</td>
+  </tr>
+  <tr>
+    <td class='center'>c</td>
+    <td class='right'>the</td>
+    <td colspan='2' class='center'>third row</td>
+  </tr>
+  <tr>
+    <td class='center'>d</td>
+    <td colspan='2' class='right'>the fourth</td>
+    <td class='left'>row</td>
+  </tr>
+  <tr>
+    <td class='center'>e</td>
+    <td colspan='3' class='right'>the fifth row</td>
+  </tr>
+  <tr>
+    <td colspan='4' class='center'>the last row</td>
+  </tr>
+</tbody>
 </table>
 
 
@@ -232,7 +337,7 @@ __**,,some,,** //--mixed--// ^^**up**^^ //text//__
 <hr>
 <h3 id='Macros'>Macro Test</h3>
 
-<p>2016-04-23  22:48:19</p>
+<p>2016-04-25  09:34:55</p>
 
 
 <div style='border:2px solid #333; margin:10px; width:200px; padding:0px; color:red; font-size:200%; text-align:center;'><p>Hello, World!</p>
