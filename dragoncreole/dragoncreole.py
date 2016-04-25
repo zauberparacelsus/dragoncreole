@@ -799,7 +799,6 @@ class DragonCreole():
 	Built-in macro for inserting a div block
 	'''
 	def macro_div(self,macro,cssclass=None,cssid=None,style=None):
-		print(style)
 		return self.insert_block(macro,"div",cssclass,cssid,style)
 	
 	'''
