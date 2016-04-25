@@ -744,7 +744,7 @@ class DragonCreole():
 				params = shlex.split(macro[1])
 				temp = inspect.getargspec(func)
 				try:
-					positionals = len(temp[0]) - len(temp[-1]) - 1
+					positionals = len(temp[0]) - len(temp[-1]) - 2
 				except:
 					positionals = 0
 				for param in params:
