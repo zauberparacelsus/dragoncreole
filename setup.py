@@ -1,20 +1,25 @@
 from distutils.core import setup
 from distutils.extension import Extension
-from Cython.Distutils import build_ext
+
+useCython = True
+
+try:
+	from Cython.Distutils import build_ext
+except:
+	useCython = False
 
 setup(
 	name = "DragonCreole",
 	packages = ["dragoncreole"],
-	version = "0.2.0",
+	version = "0.2.1",
 	description = "Optimized parser for creole-like markup language",
 	author = "Zauber Paracelsus",
 	author_email = "admin@zauberparacelsus.xyz",
 	url = "http://github.com/zauberparacelsus/dragoncreole",
-	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2",
+	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2.1",
 	keywords = ["parser", "markup", "html"],
 	install_requires= [
-		'html2text',
-		'cython'
+		'html2text'
 	],
 	classifiers = [
 		"Programming Language :: Python",
@@ -27,6 +32,6 @@ setup(
 		"Topic :: Text Processing :: Markup :: HTML"
 	],
 	long_description = "",
-	cmdclass = {"build_ext": build_ext},
-	ext_modules = [Extension("dragoncreole.DragonCreoleC", ["dragoncreole/dragoncreole.py"])]
+	cmdclass = ({"build_ext": build_ext} if useCython == True else {}),
+	ext_modules = ([Extension("dragoncreole.DragonCreoleC", ["dragoncreole/dragoncreole.py"])] if useCython == True else [])
 )
