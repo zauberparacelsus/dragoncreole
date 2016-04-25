@@ -5,12 +5,12 @@ from Cython.Distutils import build_ext
 setup(
 	name = "DragonCreole",
 	packages = ["dragoncreole"],
-	version = "0.1.0",
+	version = "0.2.0",
 	description = "Optimized parser for creole-like markup language",
 	author = "Zauber Paracelsus",
 	author_email = "admin@zauberparacelsus.xyz",
 	url = "http://github.com/zauberparacelsus/dragoncreole",
-	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.1",
+	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2",
 	keywords = ["parser", "markup", "html"],
 	install_requires= [
 		'html2text',
