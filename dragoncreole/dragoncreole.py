@@ -50,7 +50,7 @@ class DragonCreole():
 	"""
 		The main renderer class.
 	"""
-	__slots__ = ("noMacros", "auto_paragraphs", "link_path", "image_path", "bodied_macros", "non_bodied_macros", "link_path_func", "link_class_func", "out_link_mark", "postdata")
+	__slots__ = ("noMacros", "auto_paragraphs", "link_path", "image_path", "bodied_macros", "non_bodied_macros", "link_path_func", "link_class_func", "out_link_mark")
 	def __init__(self, link_path="/", image_path="", bodied_macros={}, non_bodied_macros={}, link_path_func=None, link_class_func=None, out_link_mark = "➚", auto_paragraphs=True, noMacros=False):
 		"""
 			Returns a DragonCreole parser object.  The following optional arguments may be passed when creating a DragonCreole parser, in order to extend it.
