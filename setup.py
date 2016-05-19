@@ -1,10 +1,9 @@
 from distutils.core import setup
 from distutils.extension import Extension
 
-useCython = True
-
 try:
 	from Cython.Distutils import build_ext
+	useCython = True
 except:
 	useCython = False
 
