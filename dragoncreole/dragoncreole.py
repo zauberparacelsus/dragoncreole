@@ -19,7 +19,7 @@ expanded syntax and is optimized for high performance.
 
 try:
 	from html import escape as escape
-except:
+except ImportError:
 	from cgi import escape as escape
 
 
@@ -739,11 +739,11 @@ class DragonCreole():
 			macroError = "<em><b>MACRO ERROR: {0} </b></em> "# + escape("<")
 			length = len(text[:iNum])
 			try: func = self.non_bodied_macros[macro[0]]
-			except: func = None
+			except KeyError: func = None
 			
 			if(func == None):
 				try: func = self.bodied_macros[macro[0]]
-				except: return (macroError.format("could not find " + macro[0]), length)
+				except KeyError: return (macroError.format("could not find " + macro[0]), length)
 				iNum2 = self.findMacroEnd(macro[0], text)
 				if(iNum2 == -1):
 					return (macroError.format("Bodied macros must have closing tags!"), length)
@@ -757,7 +757,7 @@ class DragonCreole():
 				temp = inspect.getargspec(func)
 				try:
 					positionals = len(temp[0]) - len(temp[-1]) - 2
-				except:
+				except TypeError:
 					positionals = 0
 				for param in params:
 					if(positionals > 0):
