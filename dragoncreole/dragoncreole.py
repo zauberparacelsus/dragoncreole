@@ -382,7 +382,6 @@ class DragonCreole():
 				self.postdata["bookmarks"] += ["{0} [[#{1}|{2}]]".format("*" * levels, temp[1], esc_string)]
 				hID = " id='{0}'".format(temp[1])
 		if(hID==None):
-			print(esc_string)
 			self.postdata["bookmarks"] += ["{0} [[#{1}|{2}]]".format("*" * levels, esc_string.replace(" ","_"), esc_string)]
 			hID = " id='{0}'".format(esc_string.replace(" ","_"))
 		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
