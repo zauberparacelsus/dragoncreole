@@ -317,7 +317,7 @@ class DragonCreole():
 					if(blockStart != -1):
 						output += escape(text[blockStart:i],True)
 						blockStart=-1
-					if(body[0] != ""):
+					if(body[0] != "" and body[0] != 0):
 						output += body[0]
 					skip = body[1]
 					continue
