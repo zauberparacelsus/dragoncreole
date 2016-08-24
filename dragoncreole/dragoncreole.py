@@ -220,7 +220,7 @@ class DragonCreole():
 									closed = True
 									break
 							if not closed:
-								nfrag += "<</"+macro+">>"
+								nfrag += ["<</"+macro+">>"]
 							yield self.handleMacro("\n".join(nfrag))[0]
 							continue
 				if(self.auto_paragraphs):
