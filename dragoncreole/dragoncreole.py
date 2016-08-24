@@ -50,7 +50,7 @@ class DragonCreole():
 	"""
 		The main renderer class.
 	"""
-	__slots__ = ("noMacros", "auto_paragraphs", "link_path", "image_path", "bodied_macros", "non_bodied_macros", "link_path_func", "link_class_func", "out_link_mark")
+	__slots__ = ("noMacros", "auto_paragraphs", "link_path", "image_path", "bodied_macros", "non_bodied_macros", "link_path_func", "link_class_func", "out_link_mark", "postdata")
 	def __init__(self, link_path="/", image_path="", bodied_macros={}, non_bodied_macros={}, link_path_func=None, link_class_func=None, out_link_mark = "➚", auto_paragraphs=True, noMacros=False):
 		"""
 			Returns a DragonCreole parser object.  The following optional arguments may be passed when creating a DragonCreole parser, in order to extend it.
@@ -101,6 +101,12 @@ class DragonCreole():
 		self.link_class_func = link_class_func
 		self.auto_paragraphs = auto_paragraphs
 		self.noMacros = noMacros
+		self.postdata = {
+			"toc": False,
+			"bookmarks": [],
+			"footnotes": {},
+			"footnoteIDs": {}
+		}
 		if(out_link_mark != ""):
 			self.out_link_mark = self.process(out_link_mark)
 		else:
@@ -129,6 +135,12 @@ class DragonCreole():
 			ret += self.renderFootnotes()
 		
 		self.postdata.clear()
+		self.postdata = {
+			"toc": False,
+			"bookmarks": [],
+			"footnotes": {},
+			"footnoteIDs": {}
+		}
 		return ret
 	
 	def macroRender(self, text, noMacros=None):
@@ -149,7 +161,7 @@ class DragonCreole():
 			if(i+1 < len(frags)):
 				nextFrag = frags[i+1]
 			if(frag == ""):
-				yield "\n"
+				yield "<br>"
 			elif(frag[:1] == "="):
 				yield self.handleHeading(frag)
 			elif(frag == "\\\\"):
@@ -370,7 +382,8 @@ class DragonCreole():
 				self.postdata["bookmarks"] += ["{0} [[#{1}|{2}]]".format("*" * levels, temp[1], esc_string)]
 				hID = " id='{0}'".format(temp[1])
 		if(hID==None):
-			self.postdata["bookmarks"] += ["{0} [[#{1}|{1}]]".format("*" * levels, esc_string)]
+			print(esc_string)
+			self.postdata["bookmarks"] += ["{0} [[#{1}|{2}]]".format("*" * levels, esc_string.replace(" ","_"), esc_string)]
 			hID = " id='{0}'".format(esc_string.replace(" ","_"))
 		return "<h{0}{2}>{1}</h{0}>\n".format(str(levels), esc_string, hID)
 	
@@ -431,13 +444,13 @@ class DragonCreole():
 				link = "/"
 			else:
 				link = self.link_path + text[0].replace(" ","_")
-		elif(not ("://" in link or "www." in link)):
+		elif(not ("://" in link or "www." in link) and link[0] != "#"):
 			if(self.link_class_func != None):
 				LC = self.link_class_func(link)
 				if(LC != None):
 					linkClass = " class='{0}'".format(LC)
 			link = self.link_path + link.replace(" ","_")
-		elif(self.out_link_mark != ""):
+		elif(self.out_link_mark != "" and link[0] != "#"):
 			name += self.out_link_mark
 		return (output.format(link,linkClass,name), skip-1)
 	
