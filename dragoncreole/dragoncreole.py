@@ -154,6 +154,7 @@ class DragonCreole():
 		i = -1
 		skip = -1
 		process = self.process
+		fraglen = len(frags) - 1
 		for i, frag in enumerate(frags):
 			if(skip > i):
 				continue
@@ -161,7 +162,8 @@ class DragonCreole():
 			if(i+1 < len(frags)):
 				nextFrag = frags[i+1]
 			if(frag == ""):
-				yield "<br>"
+				if(i < fraglen):
+					yield "<br>"
 			elif(frag[:1] == "="):
 				yield self.handleHeading(frag)
 			elif(frag == "\\\\"):
