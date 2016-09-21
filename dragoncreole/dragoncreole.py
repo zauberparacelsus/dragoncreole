@@ -451,7 +451,7 @@ class DragonCreole():
 				if(LC != None):
 					linkClass = " class='{0}'".format(LC)
 			link = self.link_path + link.replace(" ","_")
-		elif(self.out_link_mark != "" and link[0] != "#"):
+		elif(self.out_link_mark != "" and link[0] != "#" and name.startswith("<img src")==False):
 			name += self.out_link_mark
 		return (output.format(link,linkClass,name), skip-1)
 	
