@@ -10,12 +10,12 @@ except:
 setup(
 	name = "DragonCreole",
 	packages = ["dragoncreole"],
-	version = "0.2.3",
+	version = "0.2.4",
 	description = "Optimized parser for creole-like markup language",
 	author = "Zauber Paracelsus",
 	author_email = "admin@zauberparacelsus.xyz",
 	url = "http://github.com/zauberparacelsus/dragoncreole",
-	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2.3",
+	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2.4",
 	keywords = ["parser", "markup", "html"],
 	install_requires= [
 		'html2text'
