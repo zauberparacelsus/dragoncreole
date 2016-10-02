@@ -17,6 +17,9 @@ the Creole markup language (http://wikicreole.org/).  It includes an
 expanded syntax and is optimized for high performance.
 '''
 
+import sys
+python2 = (sys.version_info[0] < 3)
+
 try:
 	from html import escape as escape
 except ImportError:
@@ -118,6 +121,11 @@ class DragonCreole():
 	Renders a page to HTML
 	'''
 	def render(self, text, noMacros=None):
+		if(python2):
+			try:
+				text = text.encode("utf-8")
+			except:
+				pass
 		self.postdata = {
 			"toc": False,
 			"bookmarks": [],
@@ -141,6 +149,8 @@ class DragonCreole():
 			"footnotes": {},
 			"footnoteIDs": {}
 		}
+		if(python2):
+			ret = ret.decode("utf-8").encode("ascii", "xmlcharrefreplace")
 		return ret
 	
 	def macroRender(self, text, noMacros=None):
