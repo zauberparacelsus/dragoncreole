@@ -15,7 +15,7 @@ setup(
 	author = "Zauber Paracelsus",
 	author_email = "admin@zauberparacelsus.xyz",
 	url = "http://github.com/zauberparacelsus/dragoncreole",
-	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2.4",
+	download_url = "https://github.com/zauberparacelsus/dragoncreole/tarball/0.2.5",
 	keywords = ["parser", "markup", "html"],
 	install_requires= [
 		'html2text'
