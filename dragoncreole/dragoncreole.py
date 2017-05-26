@@ -134,7 +134,10 @@ class DragonCreole():
 		}
 		pdata = self.postdata
 		
-		ret = "\n".join(self.renderSub(text, noMacros))
+		if(python2):
+			ret = "\n".join([x.decode("utf-8").encode("ascii", "xmlcharrefreplace") for x in self.renderSub(text, noMacros)])
+		else:
+			ret = "\n".join(self.renderSub(text, noMacros))
 		
 		if(pdata["toc"] == True):
 			ret = self.handleTOC(ret)
