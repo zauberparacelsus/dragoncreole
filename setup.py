@@ -10,7 +10,7 @@ except:
 setup(
 	name = "DragonCreole",
 	packages = ["dragoncreole"],
-	version = "0.2.4",
+	version = "0.2.5",
 	description = "Optimized parser for creole-like markup language",
 	author = "Zauber Paracelsus",
 	author_email = "admin@zauberparacelsus.xyz",
