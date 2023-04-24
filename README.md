@@ -1,7 +1,7 @@
 
 ## DragonCreole
 
-DragonCreole began life as a custom spinoff of the Creole markup, optimized for speed and HTML5 compliance.  Written in Python, it was originally a component of the bliki engine I use for running the site of my web comic, [Lord of Maelstrom](https://lordofmaelstrom.com).  It has some additional features that make it different from the official Creole 1.0 specification:
+DragonCreole began life as a custom spinoff of the Creole markup, optimized for speed and HTML5 compliance.  Written in Python, it was originally a component of the bliki engine I use for running the site of my old web comic.  It has some additional features that make it different from the official Creole 1.0 specification:
 
 * Uses the sub-script, super-script, underlined text, and definition list additions
 * Strike-through text is supported
